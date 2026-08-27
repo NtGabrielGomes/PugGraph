@@ -1,0 +1,377 @@
+/* Shared UI primitives — a11y helpers, popover/menu, Select, command palette, Field. */
+
+/* ===========================================================
+   Accessibility utilities + shared UI primitives
+   =========================================================== */
+/* Screen-reader-only: present to AT, invisible on screen. */
+.visually-hidden {
+  /* fixed, not absolute: an absolute element with no positioned ancestor lands
+   * in the root containing block at its static position — which for rows low in
+   * a clipped tree is BELOW the viewport, and Chromium counts that stray pixel
+   * toward page scrollable overflow (the page scrolls, showing void below the
+   * activity bar). Fixed elements never extend scroll overflow. */
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link — first focusable, jumps to the map. */
+.skiplink {
+  position: absolute;
+  top: -40px;
+  left: var(--sp-4);
+  z-index: 100;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 6px 12px;
+  border-radius: var(--r-md);
+  font-size: var(--fs-meta);
+  transition: top .1s;
+}
+
+.skiplink:focus {
+  top: var(--sp-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Popover / menu (context menus, command palette, pickers) */
+.popover {
+  position: absolute;
+  z-index: 60;
+  min-width: 200px;
+  max-height: 70vh;
+  overflow: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  padding: 4px;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu .mitem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-base);
+  padding: 7px 10px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+}
+
+.menu .mitem:hover,
+.menu .mitem[aria-selected="true"],
+.menu .mitem.active {
+  background: var(--surface-hi);
+  color: var(--text);
+}
+
+.menu .mitem:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.menu .mitem .mkey {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-faint);
+}
+
+.menu .msep {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.menu .mhead {
+  padding: 6px 10px 4px;
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--text-faint);
+}
+
+/* Context menu (shared by the navigator list and the topology map). */
+.navmenu {
+  min-width: 184px;
+  padding: var(--sp-2);
+}
+
+.navmenu .mitem.danger {
+  color: var(--danger);
+}
+
+.navmenu .mitem.danger:hover {
+  background: var(--danger-line);
+  color: var(--text);
+}
+
+.selecttrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: var(--ctl-h);
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  font-size: var(--fs-base);
+  line-height: 1.2;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.selecttrigger.sm {
+  min-height: var(--ctl-h-sm);
+  padding: var(--ctl-pad-sm);
+  font-size: var(--fs-meta);
+  gap: var(--sp-2);
+}
+
+.selecttrigger:hover {
+  border-color: var(--border-strong);
+}
+
+.selecttrigger:focus-visible {
+  border-color: var(--accent);
+}
+
+.selecttrigger[disabled] {
+  opacity: .4;
+  cursor: default;
+}
+
+.selectval {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectph {
+  color: var(--text-faint);
+}
+
+.selectcaret {
+  margin-left: auto;
+  color: var(--text-faint);
+  flex: 0 0 auto;
+}
+
+.selectswatch {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-xs);
+  flex: 0 0 auto;
+}
+
+.selecttrigger.sm .selectswatch {
+  width: 10px;
+  height: 10px;
+}
+
+.selectmenu {
+  position: absolute;
+  z-index: 65;
+  max-height: min(45vh, 360px);
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+}
+
+.selecthead {
+  padding: 6px 10px 4px;
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--text-faint);
+}
+
+.selectopt {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 7px 10px;
+  border-radius: var(--r-md);
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  cursor: pointer;
+}
+
+.selectmenu.sm .selectopt {
+  padding: var(--ctl-pad-sm);
+  font-size: var(--fs-meta);
+}
+
+.selectopt.active,
+.selectopt[aria-selected="true"] {
+  background: var(--surface-hi);
+  color: var(--text);
+}
+
+.selectopt.disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.selectoptlabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selecthint {
+  margin-left: auto;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  padding-left: var(--sp-3);
+}
+
+/* Command palette (⌘K) — a centered overlay combobox */
+.palette-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  z-index: 70;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+}
+
+.palette {
+  width: 600px;
+  max-width: 92vw;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+}
+
+.palette input {
+  width: 100%;
+  background: var(--bg-0);
+  color: var(--text);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: var(--fs-base);
+  font-family: var(--font-mono);
+}
+
+.palette input:focus {
+  outline: none;
+}
+
+.palette .menu {
+  max-height: 52vh;
+  overflow: auto;
+  padding: 4px;
+}
+
+.palette .mitem {
+  padding: 8px 10px;
+  font-size: var(--fs-base);
+}
+
+/* Close / icon affordances (× / ★) — one centered, real hit target everywhere.
+   Imported last, so this governs the per-feature rules without touching them. */
+.chip .x,
+.credtop .x,
+.teamlist .x,
+.teamnotice .x,
+.ovfilter .x,
+.savedrow .x,
+.paths .x,
+.paths .star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-2);
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Generic field wrapper (label + control + description/error) */
+.uifield {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+}
+
+.uifield>.uilabel {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+}
+
+.uifield>.uidesc {
+  font-size: var(--fs-meta);
+  color: var(--text-faint);
+  line-height: var(--lh-tight);
+}
+
+.uifield>.uierr {
+  font-size: var(--fs-meta);
+  color: var(--err);
+}
+
+/* ErrorBoundary fallback — a crashed panel degrades in place, not to a blank app. */
+.panelerror {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2, 8px);
+  margin: var(--sp-3, 12px);
+  padding: var(--sp-3, 12px);
+  border: 1px solid var(--err, #c4566b);
+  background: var(--surface-1, #16181d);
+  color: var(--text, #e8eaed);
+  font-size: var(--fs-meta, 12px);
+}
+.panelerror>strong {
+  color: var(--err, #c4566b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.panelerror-msg {
+  color: var(--text-muted, #9aa0a8);
+  font-family: var(--font-mono, monospace);
+  word-break: break-word;
+}

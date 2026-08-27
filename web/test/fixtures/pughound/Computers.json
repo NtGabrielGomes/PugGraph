@@ -1,0 +1,30 @@
+{
+  "columns": [
+    "sAMAccountName",
+    "dNSHostName",
+    "operatingSystem",
+    "operatingSystemVersion",
+    "distinguishedName",
+    "objectSid"
+  ],
+  "query": "Computers",
+  "rowCount": 2,
+  "rows": [
+    {
+      "dNSHostName": "DC01.garfield.htb",
+      "distinguishedName": "CN=DC01,OU=Domain Controllers,DC=garfield,DC=htb",
+      "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1000",
+      "operatingSystem": "Windows Server 2019 Standard",
+      "operatingSystemVersion": "10.0 (17763)",
+      "sAMAccountName": "DC01$"
+    },
+    {
+      "dNSHostName": "RODC01.garfield.htb",
+      "distinguishedName": "CN=RODC01,OU=Domain Controllers,DC=garfield,DC=htb",
+      "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1602",
+      "operatingSystem": "Windows Server 2019 Datacenter",
+      "operatingSystemVersion": "10.0 (17763)",
+      "sAMAccountName": "RODC01$"
+    }
+  ]
+}

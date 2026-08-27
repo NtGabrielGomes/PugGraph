@@ -1,0 +1,3125 @@
+{
+  "generated": "2026-08-27 05:17:26 UTC",
+  "domain": "garfield.htb",
+  "totals": {
+    "tables": 45,
+    "rows": 339,
+    "criticalRows": 13,
+    "privilegedRows": 29
+  },
+  "categories": [
+    {
+      "name": "Domain Overview",
+      "severity": "info",
+      "tables": [
+        {
+          "name": "DomainSID",
+          "file": "DomainSID.json",
+          "severity": "info",
+          "columns": [
+            "DomainSID"
+          ],
+          "rows": [
+            {
+              "DomainSID": "S-1-5-21-2502726253-3859040611-225969357"
+            }
+          ]
+        },
+        {
+          "name": "DomainTrusts",
+          "file": "DomainTrusts.json",
+          "severity": "info",
+          "columns": [
+            "sourcedomain",
+            "trustPartner",
+            "dn",
+            "trustType",
+            "trustDirection",
+            "trustAttributes",
+            "whenCreated",
+            "whenChanged",
+            "objectClass"
+          ],
+          "rows": []
+        },
+        {
+          "name": "DomainVersion",
+          "file": "DomainVersion.json",
+          "severity": "info",
+          "columns": [
+            "objectVersion"
+          ],
+          "rows": [
+            {
+              "objectVersion": "Windows 2019 Server operating system"
+            }
+          ]
+        },
+        {
+          "name": "Krbtgt_PwdLastSet",
+          "file": "Krbtgt_PwdLastSet.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "pwdLastSet"
+          ],
+          "rows": [
+            {
+              "pwdLastSet": "2025-08-13 11:05:26 +0000 UTC",
+              "sAMAccountName": "krbtgt"
+            }
+          ]
+        },
+        {
+          "name": "MAQ",
+          "file": "MAQ.json",
+          "severity": "info",
+          "columns": [
+            "MAQ"
+          ],
+          "rows": [
+            {
+              "MAQ": "10"
+            }
+          ]
+        },
+        {
+          "name": "Policy",
+          "file": "Policy.json",
+          "severity": "info",
+          "columns": [
+            "minPwdLength",
+            "minPwdAge",
+            "maxPwdAge",
+            "pwdHistoryLength",
+            "lockoutThreshold",
+            "lockoutDuration"
+          ],
+          "rows": [
+            {
+              "lockoutDuration": "10",
+              "lockoutThreshold": "0",
+              "maxPwdAge": "42",
+              "minPwdAge": "1",
+              "minPwdLength": "7",
+              "pwdHistoryLength": "24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Infrastructure",
+      "severity": "info",
+      "tables": [
+        {
+          "name": "All_DNS",
+          "file": "All_DNS.json",
+          "severity": "info",
+          "columns": [
+            "name",
+            "dnsRecord",
+            "whenCreated"
+          ],
+          "rows": [
+            {
+              "dnsRecord": "10.129.83.192",
+              "name": "dc01",
+              "whenCreated": "20250813111414.0Z"
+            },
+            {
+              "dnsRecord": "192.168.100.1",
+              "name": "dc01",
+              "whenCreated": "20250813111414.0Z"
+            },
+            {
+              "dnsRecord": "192.168.100.2",
+              "name": "RODC01",
+              "whenCreated": "20250817113437.0Z"
+            }
+          ]
+        },
+        {
+          "name": "DomainControllers",
+          "file": "DomainControllers.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "dNSHostName",
+            "operatingSystem",
+            "operatingSystemVersion",
+            "dcip"
+          ],
+          "rows": [
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "dcip": "10.129.83.192 192.168.100.1 ",
+              "operatingSystem": "Windows Server 2019 Standard",
+              "operatingSystemVersion": "10.0 (17763)",
+              "sAMAccountName": "DC01$"
+            }
+          ]
+        },
+        {
+          "name": "PKI_Objects",
+          "file": "PKI_Objects.json",
+          "severity": "info",
+          "columns": [
+            "ObjectType",
+            "Name",
+            "DistinguishedName",
+            "Details",
+            "WhenCreated"
+          ],
+          "rows": [
+            {
+              "Details": "",
+              "DistinguishedName": "CN=OID,CN=Public Key Services,CN=Services,CN=Configuration,DC=garfield,DC=htb",
+              "Name": "OID",
+              "ObjectType": "IssuancePolicy",
+              "WhenCreated": "20250813110445.0Z"
+            }
+          ]
+        },
+        {
+          "name": "SPN",
+          "file": "SPN.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "servicePrincipalName",
+            "dNSHostName",
+            "memberOf"
+          ],
+          "rows": [
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "TERMSRV/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "TERMSRV/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01.garfield.htb/ForestDnsZones.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01.garfield.htb/DomainDnsZones.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Hyper-V Replica Service/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Hyper-V Replica Service/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Microsoft Virtual System Migration Service/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Microsoft Virtual System Migration Service/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Microsoft Virtual Console Service/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "Microsoft Virtual Console Service/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "DNS/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "GC/DC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "RestrictedKrbHost/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "RestrictedKrbHost/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "RPC/16e271d2-270f-4a57-b7f1-74497d050024._msdcs.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "HOST/DC01/GARFIELD"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "HOST/DC01.garfield.htb/GARFIELD"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "HOST/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "HOST/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "HOST/DC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "E3514235-4B06-11D1-AB04-00C04FC2DCD2/16e271d2-270f-4a57-b7f1-74497d050024/garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01/GARFIELD"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/16e271d2-270f-4a57-b7f1-74497d050024._msdcs.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01.garfield.htb/GARFIELD"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "DC01$",
+              "servicePrincipalName": "ldap/DC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "krbtgt/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "WSMAN/RODC01"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "WSMAN/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "HOST/RODC01/GARFIELD"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "HOST/RODC01.garfield.htb/GARFIELD"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "GC/RODC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "RPC/0cffd740-bba9-471b-aec4-1c9d0ddd7101._msdcs.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "HOST/RODC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01/GARFIELD"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/0cffd740-bba9-471b-aec4-1c9d0ddd7101._msdcs.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01.garfield.htb/GARFIELD"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01.garfield.htb/ForestDnsZones.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01.garfield.htb/DomainDnsZones.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "ldap/RODC01.garfield.htb/garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "TERMSRV/RODC01"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "TERMSRV/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "RestrictedKrbHost/RODC01"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "RestrictedKrbHost/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "HOST/RODC01.garfield.htb"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "memberOf": "",
+              "sAMAccountName": "RODC01$",
+              "servicePrincipalName": "HOST/RODC01"
+            },
+            {
+              "dNSHostName": "",
+              "memberOf": "",
+              "sAMAccountName": "krbtgt",
+              "servicePrincipalName": "kadmin/changepw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Privileged Groups",
+      "severity": "warn",
+      "tables": [
+        {
+          "name": "Backup Operators",
+          "file": "Backup Operators.json",
+          "severity": "warn",
+          "columns": [
+            "memberOf",
+            "sAMAccountName",
+            "displayName",
+            "distinguishedName"
+          ],
+          "rows": []
+        },
+        {
+          "name": "Domain Admins",
+          "file": "Domain Admins.json",
+          "severity": "warn",
+          "columns": [
+            "memberOf",
+            "sAMAccountName",
+            "displayName",
+            "distinguishedName"
+          ],
+          "rows": [
+            {
+              "displayName": "",
+              "distinguishedName": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "memberOf": "Domain Admins",
+              "sAMAccountName": "Administrator"
+            }
+          ]
+        },
+        {
+          "name": "Enterprise Admins",
+          "file": "Enterprise Admins.json",
+          "severity": "warn",
+          "columns": [
+            "memberOf",
+            "sAMAccountName",
+            "displayName",
+            "distinguishedName"
+          ],
+          "rows": [
+            {
+              "displayName": "",
+              "distinguishedName": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "memberOf": "Enterprise Admins",
+              "sAMAccountName": "Administrator"
+            }
+          ]
+        },
+        {
+          "name": "admincount_Users",
+          "file": "admincount_Users.json",
+          "severity": "warn",
+          "columns": [
+            "sAMAccountName"
+          ],
+          "rows": [
+            {
+              "sAMAccountName": "Administrator"
+            }
+          ]
+        },
+        {
+          "name": "administrators",
+          "file": "administrators.json",
+          "severity": "warn",
+          "columns": [
+            "memberOf",
+            "sAMAccountName",
+            "displayName",
+            "distinguishedName"
+          ],
+          "rows": [
+            {
+              "displayName": "",
+              "distinguishedName": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "memberOf": "administrators",
+              "sAMAccountName": "Administrator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "severity": "info",
+      "tables": [
+        {
+          "name": "Disabled_Users",
+          "file": "Disabled_Users.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "sAMAccountType",
+            "userPrincipalName",
+            "displayName",
+            "givenName",
+            "description",
+            "adminCount",
+            "homeDirectory",
+            "memberOf"
+          ],
+          "rows": [
+            {
+              "adminCount": "",
+              "description": "Built-in account for guest access to the computer/domain",
+              "displayName": "",
+              "givenName": "",
+              "homeDirectory": "",
+              "memberOf": "CN=Guests,CN=Builtin,DC=garfield,DC=htb",
+              "sAMAccountName": "Guest",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "1",
+              "description": "Key Distribution Center Service Account",
+              "displayName": "",
+              "givenName": "",
+              "homeDirectory": "",
+              "memberOf": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "sAMAccountName": "krbtgt",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "",
+              "description": "Key Distribution Center service account for read-only domain controller",
+              "displayName": "",
+              "givenName": "",
+              "homeDirectory": "",
+              "memberOf": "",
+              "sAMAccountName": "krbtgt_8245",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            }
+          ]
+        },
+        {
+          "name": "Locked_Users",
+          "file": "Locked_Users.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "sAMAccountType",
+            "userPrincipalName",
+            "displayName",
+            "givenName",
+            "description",
+            "adminCount",
+            "homeDirectory",
+            "memberOf"
+          ],
+          "rows": []
+        },
+        {
+          "name": "NoExpirePasswords_Users",
+          "file": "NoExpirePasswords_Users.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "displayName",
+            "description",
+            "whenCreated",
+            "whenChanged"
+          ],
+          "rows": [
+            {
+              "description": "Built-in account for administering the computer/domain",
+              "displayName": "",
+              "sAMAccountName": "Administrator",
+              "whenChanged": "20260827080400.0Z",
+              "whenCreated": "20250813110448.0Z"
+            },
+            {
+              "description": "Built-in account for guest access to the computer/domain",
+              "displayName": "",
+              "sAMAccountName": "Guest",
+              "whenChanged": "20250813110448.0Z",
+              "whenCreated": "20250813110448.0Z"
+            },
+            {
+              "description": "Key Distribution Center service account for read-only domain controller",
+              "displayName": "",
+              "sAMAccountName": "krbtgt_8245",
+              "whenChanged": "20260310193301.0Z",
+              "whenCreated": "20250817113339.0Z"
+            },
+            {
+              "description": "",
+              "displayName": "Jon Arbuckle",
+              "sAMAccountName": "j.arbuckle",
+              "whenChanged": "20260827080610.0Z",
+              "whenCreated": "20250909155055.0Z"
+            },
+            {
+              "description": "",
+              "displayName": "Liz Wilson",
+              "sAMAccountName": "l.wilson",
+              "whenChanged": "20260214012126.0Z",
+              "whenCreated": "20250912191547.0Z"
+            },
+            {
+              "description": "",
+              "displayName": "Liz Wilson ADM",
+              "sAMAccountName": "l.wilson_adm",
+              "whenChanged": "20260127213952.0Z",
+              "whenCreated": "20250912192713.0Z"
+            }
+          ]
+        },
+        {
+          "name": "SMSA",
+          "file": "SMSA.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "msDS-HostServiceAccount",
+            "memberOf",
+            "userAccountControl",
+            "whenCreated"
+          ],
+          "rows": []
+        },
+        {
+          "name": "User_WithMail",
+          "file": "User_WithMail.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "mail"
+          ],
+          "rows": []
+        },
+        {
+          "name": "Users",
+          "file": "Users.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "adminCount",
+            "lastLogon",
+            "pwdLastSet",
+            "sAMAccountType",
+            "userPrincipalName",
+            "displayName",
+            "givenName",
+            "description",
+            "distinguishedName",
+            "memberOf",
+            "objectSid"
+          ],
+          "rows": [
+            {
+              "adminCount": "1",
+              "description": "Built-in account for administering the computer/domain",
+              "displayName": "",
+              "distinguishedName": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "givenName": "",
+              "lastLogon": "2026-08-27 08:08:03 +0000 UTC",
+              "memberOf": "CN=Group Policy Creator Owners,CN=Users,DC=garfield,DC=htb CN=Domain Admins,CN=Users,DC=garfield,DC=htb CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb CN=Schema Admins,CN=Users,DC=garfield,DC=htb CN=Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-500",
+              "pwdLastSet": "2025-10-03 17:29:26 +0000 UTC",
+              "sAMAccountName": "Administrator",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "",
+              "description": "Built-in account for guest access to the computer/domain",
+              "displayName": "",
+              "distinguishedName": "CN=Guest,CN=Users,DC=garfield,DC=htb",
+              "givenName": "",
+              "lastLogon": "1601-01-01 00:00:00 +0000 UTC",
+              "memberOf": "CN=Guests,CN=Builtin,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-501",
+              "pwdLastSet": "1601-01-01 00:00:00 +0000 UTC",
+              "sAMAccountName": "Guest",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "1",
+              "description": "Key Distribution Center Service Account",
+              "displayName": "",
+              "distinguishedName": "CN=krbtgt,CN=Users,DC=garfield,DC=htb",
+              "givenName": "",
+              "lastLogon": "1601-01-01 00:00:00 +0000 UTC",
+              "memberOf": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-502",
+              "pwdLastSet": "2025-08-13 11:05:26 +0000 UTC",
+              "sAMAccountName": "krbtgt",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "",
+              "description": "Key Distribution Center service account for read-only domain controller",
+              "displayName": "",
+              "distinguishedName": "CN=krbtgt_8245,CN=Users,DC=garfield,DC=htb",
+              "givenName": "",
+              "lastLogon": "1601-01-01 00:00:00 +0000 UTC",
+              "memberOf": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1603",
+              "pwdLastSet": "2025-08-17 11:33:39 +0000 UTC",
+              "sAMAccountName": "krbtgt_8245",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": ""
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "displayName": "Jon Arbuckle",
+              "distinguishedName": "CN=Jon Arbuckle,CN=Users,DC=garfield,DC=htb",
+              "givenName": "Jon",
+              "lastLogon": "2025-09-12 22:26:04 +0000 UTC",
+              "memberOf": "CN=IT Support,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-3101",
+              "pwdLastSet": "2025-09-09 15:50:55 +0000 UTC",
+              "sAMAccountName": "j.arbuckle",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": "j.arbuckle@garfield.htb"
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "displayName": "Liz Wilson",
+              "distinguishedName": "CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "givenName": "Liz",
+              "lastLogon": "2026-02-14 01:18:57 +0000 UTC",
+              "memberOf": "CN=Remote Management Users,CN=Builtin,DC=garfield,DC=htb CN=Remote Desktop Users,CN=Builtin,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-3105",
+              "pwdLastSet": "2026-01-27 21:40:33 +0000 UTC",
+              "sAMAccountName": "l.wilson",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": "l.wilson@garfield.htb"
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "displayName": "Liz Wilson ADM",
+              "distinguishedName": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "givenName": "Liz",
+              "lastLogon": "2025-10-03 17:22:46 +0000 UTC",
+              "memberOf": "CN=Tier 1,CN=Users,DC=garfield,DC=htb CN=Remote Management Users,CN=Builtin,DC=garfield,DC=htb CN=Remote Desktop Users,CN=Builtin,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-3107",
+              "pwdLastSet": "2026-01-13 14:56:35 +0000 UTC",
+              "sAMAccountName": "l.wilson_adm",
+              "sAMAccountType": "805306368",
+              "userPrincipalName": "l.wilson_adm@garfield.htb"
+            }
+          ]
+        },
+        {
+          "name": "Users_OnlyName",
+          "file": "Users_OnlyName.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName"
+          ],
+          "rows": [
+            {
+              "sAMAccountName": "Administrator"
+            },
+            {
+              "sAMAccountName": "j.arbuckle"
+            },
+            {
+              "sAMAccountName": "l.wilson"
+            },
+            {
+              "sAMAccountName": "l.wilson_adm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Computers",
+      "severity": "info",
+      "tables": [
+        {
+          "name": "Computers",
+          "file": "Computers.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "dNSHostName",
+            "operatingSystem",
+            "operatingSystemVersion",
+            "distinguishedName",
+            "objectSid"
+          ],
+          "rows": [
+            {
+              "dNSHostName": "DC01.garfield.htb",
+              "distinguishedName": "CN=DC01,OU=Domain Controllers,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1000",
+              "operatingSystem": "Windows Server 2019 Standard",
+              "operatingSystemVersion": "10.0 (17763)",
+              "sAMAccountName": "DC01$"
+            },
+            {
+              "dNSHostName": "RODC01.garfield.htb",
+              "distinguishedName": "CN=RODC01,OU=Domain Controllers,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1602",
+              "operatingSystem": "Windows Server 2019 Datacenter",
+              "operatingSystemVersion": "10.0 (17763)",
+              "sAMAccountName": "RODC01$"
+            }
+          ]
+        },
+        {
+          "name": "Computers_OnlyName",
+          "file": "Computers_OnlyName.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName"
+          ],
+          "rows": [
+            {
+              "sAMAccountName": "DC01$"
+            },
+            {
+              "sAMAccountName": "RODC01$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Groups \u0026 OUs",
+      "severity": "info",
+      "tables": [
+        {
+          "name": "Containers",
+          "file": "Containers.json",
+          "severity": "info",
+          "columns": [
+            "Name",
+            "DistinguishedName",
+            "ObjectClass",
+            "ParentDN",
+            "WhenCreated"
+          ],
+          "rows": [
+            {
+              "DistinguishedName": "CN=Users,DC=garfield,DC=htb",
+              "Name": "Users",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Computers,DC=garfield,DC=htb",
+              "Name": "Computers",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=System,DC=garfield,DC=htb",
+              "Name": "System",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "Name": "ForeignSecurityPrincipals",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Program Data,DC=garfield,DC=htb",
+              "Name": "Program Data",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Microsoft,CN=Program Data,DC=garfield,DC=htb",
+              "Name": "Microsoft",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Program Data,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Managed Service Accounts,DC=garfield,DC=htb",
+              "Name": "Managed Service Accounts",
+              "ObjectClass": "container",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=WinsockServices,CN=System,DC=garfield,DC=htb",
+              "Name": "WinsockServices",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=RpcServices,CN=System,DC=garfield,DC=htb",
+              "Name": "RpcServices",
+              "ObjectClass": "rpcContainer",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Meetings,CN=System,DC=garfield,DC=htb",
+              "Name": "Meetings",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Policies,CN=System,DC=garfield,DC=htb",
+              "Name": "Policies",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=User,CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "Name": "User",
+              "ObjectClass": "container",
+              "ParentDN": "CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Machine,CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "Name": "Machine",
+              "ObjectClass": "container",
+              "ParentDN": "CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=User,CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "Name": "User",
+              "ObjectClass": "container",
+              "ParentDN": "CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Machine,CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "Name": "Machine",
+              "ObjectClass": "container",
+              "ParentDN": "CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=RAS and IAS Servers Access Check,CN=System,DC=garfield,DC=htb",
+              "Name": "RAS and IAS Servers Access Check",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=AdminSDHolder,CN=System,DC=garfield,DC=htb",
+              "Name": "AdminSDHolder",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ComPartitions,CN=System,DC=garfield,DC=htb",
+              "Name": "ComPartitions",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ComPartitionSets,CN=System,DC=garfield,DC=htb",
+              "Name": "ComPartitionSets",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "Name": "WMIPolicy",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=PolicyTemplate,CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "Name": "PolicyTemplate",
+              "ObjectClass": "container",
+              "ParentDN": "CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=SOM,CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "Name": "SOM",
+              "ObjectClass": "container",
+              "ParentDN": "CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=PolicyType,CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "Name": "PolicyType",
+              "ObjectClass": "container",
+              "ParentDN": "CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=WMIGPO,CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "Name": "WMIGPO",
+              "ObjectClass": "container",
+              "ParentDN": "CN=WMIPolicy,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "DomainUpdates",
+              "ObjectClass": "container",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "Operations",
+              "ObjectClass": "container",
+              "ParentDN": "CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ab402345-d3c3-455d-9ff7-40268a1099b6,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "ab402345-d3c3-455d-9ff7-40268a1099b6",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=bab5f54d-06c8-48de-9b87-d78b796564e4,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "bab5f54d-06c8-48de-9b87-d78b796564e4",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=f3dd09dd-25e8-4f9c-85df-12d6d2f2f2f5,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "f3dd09dd-25e8-4f9c-85df-12d6d2f2f2f5",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=2416c60a-fe15-4d7a-a61e-dffd5df864d3,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "2416c60a-fe15-4d7a-a61e-dffd5df864d3",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=7868d4c8-ac41-4e05-b401-776280e8e9f1,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "7868d4c8-ac41-4e05-b401-776280e8e9f1",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=860c36ed-5241-4c62-a18b-cf6ff9994173,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "860c36ed-5241-4c62-a18b-cf6ff9994173",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=0e660ea3-8a5e-4495-9ad7-ca1bd4638f9e,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "0e660ea3-8a5e-4495-9ad7-ca1bd4638f9e",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=a86fe12a-0f62-4e2a-b271-d27f601f8182,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "a86fe12a-0f62-4e2a-b271-d27f601f8182",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=d85c0bfd-094f-4cad-a2b5-82ac9268475d,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "d85c0bfd-094f-4cad-a2b5-82ac9268475d",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6ada9ff7-c9df-45c1-908e-9fef2fab008a,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6ada9ff7-c9df-45c1-908e-9fef2fab008a",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=10b3ad2a-6883-4fa7-90fc-6377cbdc1b26,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "10b3ad2a-6883-4fa7-90fc-6377cbdc1b26",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=98de1d3e-6611-443b-8b4e-f4337f1ded0b,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "98de1d3e-6611-443b-8b4e-f4337f1ded0b",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=f607fd87-80cf-45e2-890b-6cf97ec0e284,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "f607fd87-80cf-45e2-890b-6cf97ec0e284",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=9cac1f66-2167-47ad-a472-2a13251310e4,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "9cac1f66-2167-47ad-a472-2a13251310e4",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6ff880d6-11e7-4ed1-a20f-aac45da48650,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6ff880d6-11e7-4ed1-a20f-aac45da48650",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=446f24ea-cfd5-4c52-8346-96e170bcb912,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "446f24ea-cfd5-4c52-8346-96e170bcb912",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=51cba88b-99cf-4e16-bef2-c427b38d0767,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "51cba88b-99cf-4e16-bef2-c427b38d0767",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=a3dac986-80e7-4e59-a059-54cb1ab43cb9,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "a3dac986-80e7-4e59-a059-54cb1ab43cb9",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=293f0798-ea5c-4455-9f5d-45f33a30703b,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "293f0798-ea5c-4455-9f5d-45f33a30703b",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=5c82b233-75fc-41b3-ac71-c69592e6bf15,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "5c82b233-75fc-41b3-ac71-c69592e6bf15",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=7ffef925-405b-440a-8d58-35e8cd6e98c3,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "7ffef925-405b-440a-8d58-35e8cd6e98c3",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=4dfbb973-8a62-4310-a90c-776e00f83222,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "4dfbb973-8a62-4310-a90c-776e00f83222",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=8437C3D8-7689-4200-BF38-79E4AC33DFA0,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "8437C3D8-7689-4200-BF38-79E4AC33DFA0",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=7cfb016c-4f87-4406-8166-bd9df943947f,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "7cfb016c-4f87-4406-8166-bd9df943947f",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=f7ed4553-d82b-49ef-a839-2f38a36bb069,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "f7ed4553-d82b-49ef-a839-2f38a36bb069",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=8ca38317-13a4-4bd4-806f-ebed6acb5d0c,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "8ca38317-13a4-4bd4-806f-ebed6acb5d0c",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=3c784009-1f57-4e2a-9b04-6915c9e71961,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "3c784009-1f57-4e2a-9b04-6915c9e71961",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5678-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5678-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5679-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5679-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567a-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567a-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567b-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567b-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567c-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567c-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567d-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567d-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567e-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567e-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd567f-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd567f-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5680-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5680-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5681-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5681-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5682-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5682-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5683-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5683-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5684-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5684-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5685-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5685-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5686-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5686-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5687-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5687-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5688-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5688-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd5689-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd5689-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd568a-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd568a-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd568b-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd568b-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd568c-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd568c-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6bcd568d-8314-11d6-977b-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6bcd568d-8314-11d6-977b-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=3051c66f-b332-4a73-9a20-2d6a7d6e6a1c,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "3051c66f-b332-4a73-9a20-2d6a7d6e6a1c",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=3e4f4182-ac5d-4378-b760-0eab2de593e2,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "3e4f4182-ac5d-4378-b760-0eab2de593e2",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=c4f17608-e611-11d6-9793-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "c4f17608-e611-11d6-9793-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=13d15cf0-e6c8-11d6-9793-00c04f613221,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "13d15cf0-e6c8-11d6-9793-00c04f613221",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=8ddf6913-1c7b-4c59-a5af-b9ca3b3d2c4c,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "8ddf6913-1c7b-4c59-a5af-b9ca3b3d2c4c",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=dda1d01d-4bd7-4c49-a184-46f9241b560e,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "dda1d01d-4bd7-4c49-a184-46f9241b560e",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=a1789bfb-e0a2-4739-8cc0-e77d892d080a,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "a1789bfb-e0a2-4739-8cc0-e77d892d080a",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=61b34cb0-55ee-4be9-b595-97810b92b017,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "61b34cb0-55ee-4be9-b595-97810b92b017",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=57428d75-bef7-43e1-938b-2e749f5a8d56,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "57428d75-bef7-43e1-938b-2e749f5a8d56",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ebad865a-d649-416f-9922-456b53bbb5b8,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "ebad865a-d649-416f-9922-456b53bbb5b8",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=0b7fb422-3609-4587-8c2e-94b10f67d1bf,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "0b7fb422-3609-4587-8c2e-94b10f67d1bf",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=2951353e-d102-4ea5-906c-54247eeec741,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "2951353e-d102-4ea5-906c-54247eeec741",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=71482d49-8870-4cb3-a438-b6fc9ec35d70,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "71482d49-8870-4cb3-a438-b6fc9ec35d70",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=aed72870-bf16-4788-8ac7-22299c8207f1,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "aed72870-bf16-4788-8ac7-22299c8207f1",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=f58300d1-b71a-4DB6-88a1-a8b9538beaca,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "f58300d1-b71a-4DB6-88a1-a8b9538beaca",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=231fb90b-c92a-40c9-9379-bacfc313a3e3,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "231fb90b-c92a-40c9-9379-bacfc313a3e3",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=4aaabc3a-c416-4b9c-a6bb-4b453ab1c1f0,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "4aaabc3a-c416-4b9c-a6bb-4b453ab1c1f0",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=9738c400-7795-4d6e-b19d-c16cd6486166,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "9738c400-7795-4d6e-b19d-c16cd6486166",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=de10d491-909f-4fb0-9abb-4b7865c0fe80,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "de10d491-909f-4fb0-9abb-4b7865c0fe80",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=b96ed344-545a-4172-aa0c-68118202f125,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "b96ed344-545a-4172-aa0c-68118202f125",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=4c93ad42-178a-4275-8600-16811d28f3aa,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "4c93ad42-178a-4275-8600-16811d28f3aa",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=c88227bc-fcca-4b58-8d8a-cd3d64528a02,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "c88227bc-fcca-4b58-8d8a-cd3d64528a02",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=5e1574f6-55df-493e-a671-aaeffca6a100,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "5e1574f6-55df-493e-a671-aaeffca6a100",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=d262aae8-41f7-48ed-9f35-56bbb677573d,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "d262aae8-41f7-48ed-9f35-56bbb677573d",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=82112ba0-7e4c-4a44-89d9-d46c9612bf91,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "82112ba0-7e4c-4a44-89d9-d46c9612bf91",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=c3c927a6-cc1d-47c0-966b-be8f9b63d991,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "c3c927a6-cc1d-47c0-966b-be8f9b63d991",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=54afcfb9-637a-4251-9f47-4d50e7021211,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "54afcfb9-637a-4251-9f47-4d50e7021211",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=f4728883-84dd-483c-9897-274f2ebcf11e,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "f4728883-84dd-483c-9897-274f2ebcf11e",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ff4f9d27-7157-4cb0-80a9-5d6f2b14c8ff,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "ff4f9d27-7157-4cb0-80a9-5d6f2b14c8ff",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=83C53DA7-427E-47A4-A07A-A324598B88F7,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "83C53DA7-427E-47A4-A07A-A324598B88F7",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=C81FC9CC-0130-4FD1-B272-634D74818133,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "C81FC9CC-0130-4FD1-B272-634D74818133",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=E5F9E791-D96D-4FC9-93C9-D53E1DC439BA,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "E5F9E791-D96D-4FC9-93C9-D53E1DC439BA",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=e6d5fd00-385d-4e65-b02d-9da3493ed850,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "e6d5fd00-385d-4e65-b02d-9da3493ed850",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=3a6b3fbf-3168-4312-a10d-dd5b3393952d,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "3a6b3fbf-3168-4312-a10d-dd5b3393952d",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=7F950403-0AB3-47F9-9730-5D7B0269F9BD,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "7F950403-0AB3-47F9-9730-5D7B0269F9BD",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=434bb40d-dbc9-4fe7-81d4-d57229f7b080,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "434bb40d-dbc9-4fe7-81d4-d57229f7b080",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=A0C238BA-9E30-4EE6-80A6-43F731E9A5CD,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "A0C238BA-9E30-4EE6-80A6-43F731E9A5CD",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=Windows2003Update,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "Windows2003Update",
+              "ObjectClass": "container",
+              "ParentDN": "CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=ActiveDirectoryUpdate,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "ActiveDirectoryUpdate",
+              "ObjectClass": "container",
+              "ParentDN": "CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=PSPs,CN=System,DC=garfield,DC=htb",
+              "Name": "PSPs",
+              "ObjectClass": "msImaging-PSPs",
+              "ParentDN": "CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            },
+            {
+              "DistinguishedName": "CN=6E157EDF-4E72-4052-A82A-EC3F91021A22,CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "Name": "6E157EDF-4E72-4052-A82A-EC3F91021A22",
+              "ObjectClass": "container",
+              "ParentDN": "CN=Operations,CN=DomainUpdates,CN=System,DC=garfield,DC=htb",
+              "WhenCreated": "20250813110526.0Z"
+            },
+            {
+              "DistinguishedName": "OU=Domain Controllers,DC=garfield,DC=htb",
+              "Name": "Domain Controllers",
+              "ObjectClass": "organizationalUnit",
+              "ParentDN": "DC=garfield,DC=htb",
+              "WhenCreated": "20250813110448.0Z"
+            }
+          ]
+        },
+        {
+          "name": "DomainGroups",
+          "file": "DomainGroups.json",
+          "severity": "info",
+          "columns": [
+            "sAMAccountName",
+            "dn",
+            "description",
+            "adminCount",
+            "member",
+            "objectSid"
+          ],
+          "rows": [
+            {
+              "adminCount": "1",
+              "description": "Administrators have complete and unrestricted access to the computer/domain",
+              "dn": "CN=Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=Domain Admins,CN=Users,DC=garfield,DC=htb | CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb | CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-544",
+              "sAMAccountName": "Administrators"
+            },
+            {
+              "adminCount": "",
+              "description": "Users are prevented from making accidental or intentional system-wide changes and can run most applications",
+              "dn": "CN=Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=Domain Users,CN=Users,DC=garfield,DC=htb | CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb | CN=S-1-5-4,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-545",
+              "sAMAccountName": "Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Guests have the same access as members of the Users group by default, except for the Guest account which is further restricted",
+              "dn": "CN=Guests,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=Domain Guests,CN=Users,DC=garfield,DC=htb | CN=Guest,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-546",
+              "sAMAccountName": "Guests"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members can administer printers installed on domain controllers",
+              "dn": "CN=Print Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-550",
+              "sAMAccountName": "Print Operators"
+            },
+            {
+              "adminCount": "1",
+              "description": "Backup Operators can override security restrictions for the sole purpose of backing up or restoring files",
+              "dn": "CN=Backup Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-551",
+              "sAMAccountName": "Backup Operators"
+            },
+            {
+              "adminCount": "1",
+              "description": "Supports file replication in a domain",
+              "dn": "CN=Replicator,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-552",
+              "sAMAccountName": "Replicator"
+            },
+            {
+              "adminCount": "",
+              "description": "Members in this group are granted the right to logon remotely",
+              "dn": "CN=Remote Desktop Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb | CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-555",
+              "sAMAccountName": "Remote Desktop Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Members in this group can have some administrative privileges to manage configuration of networking features",
+              "dn": "CN=Network Configuration Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-556",
+              "sAMAccountName": "Network Configuration Operators"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can access performance counter data locally and remotely",
+              "dn": "CN=Performance Monitor Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-558",
+              "sAMAccountName": "Performance Monitor Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group may schedule logging of performance counters, enable trace providers, and collect event traces both locally and via remote access to this computer",
+              "dn": "CN=Performance Log Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-559",
+              "sAMAccountName": "Performance Log Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Members are allowed to launch, activate and use Distributed COM objects on this machine.",
+              "dn": "CN=Distributed COM Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-562",
+              "sAMAccountName": "Distributed COM Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Built-in group used by Internet Information Services.",
+              "dn": "CN=IIS_IUSRS,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=S-1-5-17,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-568",
+              "sAMAccountName": "IIS_IUSRS"
+            },
+            {
+              "adminCount": "",
+              "description": "Members are authorized to perform cryptographic operations.",
+              "dn": "CN=Cryptographic Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-569",
+              "sAMAccountName": "Cryptographic Operators"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can read event logs from local machine",
+              "dn": "CN=Event Log Readers,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-573",
+              "sAMAccountName": "Event Log Readers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group are allowed to connect to Certification Authorities in the enterprise",
+              "dn": "CN=Certificate Service DCOM Access,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-574",
+              "sAMAccountName": "Certificate Service DCOM Access"
+            },
+            {
+              "adminCount": "",
+              "description": "Servers in this group enable users of RemoteApp programs and personal virtual desktops access to these resources. In Internet-facing deployments, these servers are typically deployed in an edge network. This group needs to be populated on servers running RD Connection Broker. RD Gateway servers and RD Web Access servers used in the deployment need to be in this group.",
+              "dn": "CN=RDS Remote Access Servers,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-575",
+              "sAMAccountName": "RDS Remote Access Servers"
+            },
+            {
+              "adminCount": "",
+              "description": "Servers in this group run virtual machines and host sessions where users RemoteApp programs and personal virtual desktops run. This group needs to be populated on servers running RD Connection Broker. RD Session Host servers and RD Virtualization Host servers used in the deployment need to be in this group.",
+              "dn": "CN=RDS Endpoint Servers,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-576",
+              "sAMAccountName": "RDS Endpoint Servers"
+            },
+            {
+              "adminCount": "",
+              "description": "Servers in this group can perform routine administrative actions on servers running Remote Desktop Services. This group needs to be populated on all servers in a Remote Desktop Services deployment. The servers running the RDS Central Management service must be included in this group.",
+              "dn": "CN=RDS Management Servers,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-577",
+              "sAMAccountName": "RDS Management Servers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group have complete and unrestricted access to all features of Hyper-V.",
+              "dn": "CN=Hyper-V Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-578",
+              "sAMAccountName": "Hyper-V Administrators"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can remotely query authorization attributes and permissions for resources on this computer.",
+              "dn": "CN=Access Control Assistance Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-579",
+              "sAMAccountName": "Access Control Assistance Operators"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can access WMI resources over management protocols (such as WS-Management via the Windows Remote Management service). This applies only to WMI namespaces that grant access to the user.",
+              "dn": "CN=Remote Management Users,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb | CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-580",
+              "sAMAccountName": "Remote Management Users"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group have complete and unrestricted access to all features of Storage Replica.",
+              "dn": "CN=Storage Replica Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-582",
+              "sAMAccountName": "Storage Replica Administrators"
+            },
+            {
+              "adminCount": "",
+              "description": "All workstations and servers joined to the domain",
+              "dn": "CN=Domain Computers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-515",
+              "sAMAccountName": "Domain Computers"
+            },
+            {
+              "adminCount": "1",
+              "description": "All domain controllers in the domain",
+              "dn": "CN=Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-516",
+              "sAMAccountName": "Domain Controllers"
+            },
+            {
+              "adminCount": "1",
+              "description": "Designated administrators of the schema",
+              "dn": "CN=Schema Admins,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-518",
+              "sAMAccountName": "Schema Admins"
+            },
+            {
+              "adminCount": "1",
+              "description": "Designated administrators of the enterprise",
+              "dn": "CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-519",
+              "sAMAccountName": "Enterprise Admins"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group are permitted to publish certificates to the directory",
+              "dn": "CN=Cert Publishers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-517",
+              "sAMAccountName": "Cert Publishers"
+            },
+            {
+              "adminCount": "1",
+              "description": "Designated administrators of the domain",
+              "dn": "CN=Domain Admins,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "sAMAccountName": "Domain Admins"
+            },
+            {
+              "adminCount": "",
+              "description": "All domain users",
+              "dn": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-513",
+              "sAMAccountName": "Domain Users"
+            },
+            {
+              "adminCount": "",
+              "description": "All domain guests",
+              "dn": "CN=Domain Guests,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-514",
+              "sAMAccountName": "Domain Guests"
+            },
+            {
+              "adminCount": "",
+              "description": "Members in this group can modify group policy for the domain",
+              "dn": "CN=Group Policy Creator Owners,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-520",
+              "sAMAccountName": "Group Policy Creator Owners"
+            },
+            {
+              "adminCount": "",
+              "description": "Servers in this group can access remote access properties of users",
+              "dn": "CN=RAS and IAS Servers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-553",
+              "sAMAccountName": "RAS and IAS Servers"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members can administer domain servers",
+              "dn": "CN=Server Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-549",
+              "sAMAccountName": "Server Operators"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members can administer domain user and group accounts",
+              "dn": "CN=Account Operators,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-548",
+              "sAMAccountName": "Account Operators"
+            },
+            {
+              "adminCount": "",
+              "description": "A backward compatibility group which allows read access on all users and groups in the domain",
+              "dn": "CN=Pre-Windows 2000 Compatible Access,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-554",
+              "sAMAccountName": "Pre-Windows 2000 Compatible Access"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can create incoming, one-way trusts to this forest",
+              "dn": "CN=Incoming Forest Trust Builders,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-557",
+              "sAMAccountName": "Incoming Forest Trust Builders"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group have access to the computed tokenGroupsGlobalAndUniversal attribute on User objects",
+              "dn": "CN=Windows Authorization Access Group,CN=Builtin,DC=garfield,DC=htb",
+              "member": "CN=S-1-5-9,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-32-560",
+              "sAMAccountName": "Windows Authorization Access Group"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group can update user accounts in Active Directory with information about license issuance, for the purpose of tracking and reporting TS Per User CAL usage",
+              "dn": "CN=Terminal Server License Servers,CN=Builtin,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-32-561",
+              "sAMAccountName": "Terminal Server License Servers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members in this group can have their passwords replicated to all read-only domain controllers in the domain",
+              "dn": "CN=Allowed RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-571",
+              "sAMAccountName": "Allowed RODC Password Replication Group"
+            },
+            {
+              "adminCount": "",
+              "description": "Members in this group cannot have their passwords replicated to any read-only domain controllers in the domain",
+              "dn": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Read-only Domain Controllers,CN=Users,DC=garfield,DC=htb | CN=Group Policy Creator Owners,CN=Users,DC=garfield,DC=htb | CN=Domain Admins,CN=Users,DC=garfield,DC=htb | CN=Cert Publishers,CN=Users,DC=garfield,DC=htb | CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb | CN=Schema Admins,CN=Users,DC=garfield,DC=htb | CN=Domain Controllers,CN=Users,DC=garfield,DC=htb | CN=krbtgt,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-572",
+              "sAMAccountName": "Denied RODC Password Replication Group"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members of this group are Read-Only Domain Controllers in the domain",
+              "dn": "CN=Read-only Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-521",
+              "sAMAccountName": "Read-only Domain Controllers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group are Read-Only Domain Controllers in the enterprise",
+              "dn": "CN=Enterprise Read-only Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-498",
+              "sAMAccountName": "Enterprise Read-only Domain Controllers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group that are domain controllers may be cloned.",
+              "dn": "CN=Cloneable Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-522",
+              "sAMAccountName": "Cloneable Domain Controllers"
+            },
+            {
+              "adminCount": "",
+              "description": "Members of this group are afforded additional protections against authentication security threats. See http://go.microsoft.com/fwlink/?LinkId=298939 for more information.",
+              "dn": "CN=Protected Users,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-525",
+              "sAMAccountName": "Protected Users"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members of this group can perform administrative actions on key objects within the domain.",
+              "dn": "CN=Key Admins,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-526",
+              "sAMAccountName": "Key Admins"
+            },
+            {
+              "adminCount": "1",
+              "description": "Members of this group can perform administrative actions on key objects within the forest.",
+              "dn": "CN=Enterprise Key Admins,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-527",
+              "sAMAccountName": "Enterprise Key Admins"
+            },
+            {
+              "adminCount": "",
+              "description": "DNS Administrators Group",
+              "dn": "CN=DnsAdmins,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1101",
+              "sAMAccountName": "DnsAdmins"
+            },
+            {
+              "adminCount": "",
+              "description": "DNS clients who are permitted to perform dynamic updates on behalf of some other clients (such as DHCP servers).",
+              "dn": "CN=DnsUpdateProxy,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-1102",
+              "sAMAccountName": "DnsUpdateProxy"
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "dn": "CN=RODC Administrators,CN=Users,DC=garfield,DC=htb",
+              "member": "",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-2101",
+              "sAMAccountName": "RODC Administrators"
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "dn": "CN=IT Support,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Jon Arbuckle,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-3106",
+              "sAMAccountName": "IT Support"
+            },
+            {
+              "adminCount": "",
+              "description": "",
+              "dn": "CN=Tier 1,CN=Users,DC=garfield,DC=htb",
+              "member": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "objectSid": "S-1-5-21-2502726253-3859040611-225969357-3108",
+              "sAMAccountName": "Tier 1"
+            }
+          ]
+        },
+        {
+          "name": "Domain_OUs",
+          "file": "Domain_OUs.json",
+          "severity": "info",
+          "columns": [
+            "ou",
+            "dn",
+            "ADsPath",
+            "objectClass",
+            "whenCreated",
+            "whenChanged",
+            "instanceType"
+          ],
+          "rows": [
+            {
+              "ADsPath": "dc=garfield,dc=htb",
+              "dn": "OU=Domain Controllers,DC=garfield,DC=htb",
+              "instanceType": "4",
+              "objectClass": "top | organizationalUnit",
+              "ou": "Domain Controllers",
+              "whenChanged": "20250813110448.0Z",
+              "whenCreated": "20250813110448.0Z"
+            }
+          ]
+        },
+        {
+          "name": "GPLink",
+          "file": "GPLink.json",
+          "severity": "info",
+          "columns": [
+            "ObjectDN",
+            "ObjectType",
+            "BlockInheritance",
+            "LinkOrder",
+            "GPO_GUID",
+            "GPO_Name",
+            "LinkEnabled"
+          ],
+          "rows": [
+            {
+              "BlockInheritance": "0",
+              "GPO_GUID": "31b2f340-016d-11d2-945f-00c04fb984f9",
+              "GPO_Name": "Default Domain Policy",
+              "LinkEnabled": "true",
+              "LinkOrder": "1",
+              "ObjectDN": "DC=garfield,DC=htb",
+              "ObjectType": "domainDNS"
+            },
+            {
+              "BlockInheritance": "0",
+              "GPO_GUID": "6ac1786c-016f-11d2-945f-00c04fb984f9",
+              "GPO_Name": "Default Domain Controllers Policy",
+              "LinkEnabled": "true",
+              "LinkOrder": "1",
+              "ObjectDN": "OU=Domain Controllers,DC=garfield,DC=htb",
+              "ObjectType": "organizationalUnit"
+            }
+          ]
+        },
+        {
+          "name": "GPO",
+          "file": "GPO.json",
+          "severity": "info",
+          "columns": [
+            "displayName",
+            "dn",
+            "gPCFileSysPath",
+            "gPCUserExtensionNames",
+            "gPCMachineExtensionNames"
+          ],
+          "rows": [
+            {
+              "displayName": "Default Domain Policy",
+              "dn": "CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "gPCFileSysPath": "\\\\garfield.htb\\sysvol\\garfield.htb\\Policies\\{31B2F340-016D-11D2-945F-00C04FB984F9}",
+              "gPCMachineExtensionNames": "[{35378EAC-683F-11D2-A89A-00C04FBBCFA2}{53D6AB1B-2488-11D1-A28C-00C04FB94F17}][{827D319E-6EAC-11D2-A4EA-00C04F79F83A}{803E14A0-B4FB-11D0-A0D0-00A0C90F574B}][{B1BE8D72-6EAC-11D2-A4EA-00C04F79F83A}{53D6AB1B-2488-11D1-A28C-00C04FB94F17}]",
+              "gPCUserExtensionNames": ""
+            },
+            {
+              "displayName": "Default Domain Controllers Policy",
+              "dn": "CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=garfield,DC=htb",
+              "gPCFileSysPath": "\\\\garfield.htb\\sysvol\\garfield.htb\\Policies\\{6AC1786C-016F-11D2-945F-00C04fB984F9}",
+              "gPCMachineExtensionNames": "[{827D319E-6EAC-11D2-A4EA-00C04F79F83A}{803E14A0-B4FB-11D0-A0D0-00A0C90F574B}][{F3CCC681-B74C-4060-9F26-CD84525DCA2A}{0F3F3735-573D-9804-99E4-AB2A69BA5FD4}]",
+              "gPCUserExtensionNames": ""
+            }
+          ]
+        },
+        {
+          "name": "GroupMembership",
+          "file": "GroupMembership.json",
+          "severity": "info",
+          "columns": [
+            "Group",
+            "GroupDN",
+            "Member",
+            "MemberDN",
+            "MemberType",
+            "Via"
+          ],
+          "rows": [
+            {
+              "Group": "Administrators",
+              "GroupDN": "CN=Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Domain Admins",
+              "MemberDN": "CN=Domain Admins,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Administrators",
+              "GroupDN": "CN=Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Enterprise Admins",
+              "MemberDN": "CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Administrators",
+              "GroupDN": "CN=Administrators,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Users",
+              "GroupDN": "CN=Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Domain Users",
+              "MemberDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Users",
+              "GroupDN": "CN=Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberDN": "CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Users",
+              "GroupDN": "CN=Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "CN=S-1-5-4,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberDN": "CN=S-1-5-4,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Guests",
+              "GroupDN": "CN=Guests,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Domain Guests",
+              "MemberDN": "CN=Domain Guests,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Guests",
+              "GroupDN": "CN=Guests,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "Guest",
+              "MemberDN": "CN=Guest,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Remote Desktop Users",
+              "GroupDN": "CN=Remote Desktop Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "l.wilson_adm",
+              "MemberDN": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Remote Desktop Users",
+              "GroupDN": "CN=Remote Desktop Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "l.wilson",
+              "MemberDN": "CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "IIS_IUSRS",
+              "GroupDN": "CN=IIS_IUSRS,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "CN=S-1-5-17,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberDN": "CN=S-1-5-17,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Remote Management Users",
+              "GroupDN": "CN=Remote Management Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "l.wilson_adm",
+              "MemberDN": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Remote Management Users",
+              "GroupDN": "CN=Remote Management Users,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "l.wilson",
+              "MemberDN": "CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Schema Admins",
+              "GroupDN": "CN=Schema Admins,CN=Users,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Enterprise Admins",
+              "GroupDN": "CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Domain Admins",
+              "GroupDN": "CN=Domain Admins,CN=Users,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Group Policy Creator Owners",
+              "GroupDN": "CN=Group Policy Creator Owners,CN=Users,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Pre-Windows 2000 Compatible Access",
+              "GroupDN": "CN=Pre-Windows 2000 Compatible Access,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberDN": "CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Windows Authorization Access Group",
+              "GroupDN": "CN=Windows Authorization Access Group,CN=Builtin,DC=garfield,DC=htb",
+              "Member": "CN=S-1-5-9,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberDN": "CN=S-1-5-9,CN=ForeignSecurityPrincipals,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Read-only Domain Controllers",
+              "MemberDN": "CN=Read-only Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Group Policy Creator Owners",
+              "MemberDN": "CN=Group Policy Creator Owners,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Domain Admins",
+              "MemberDN": "CN=Domain Admins,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Cert Publishers",
+              "MemberDN": "CN=Cert Publishers,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Enterprise Admins",
+              "MemberDN": "CN=Enterprise Admins,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Schema Admins",
+              "MemberDN": "CN=Schema Admins,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "Domain Controllers",
+              "MemberDN": "CN=Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "",
+              "Via": "member"
+            },
+            {
+              "Group": "Denied RODC Password Replication Group",
+              "GroupDN": "CN=Denied RODC Password Replication Group,CN=Users,DC=garfield,DC=htb",
+              "Member": "krbtgt",
+              "MemberDN": "CN=krbtgt,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "IT Support",
+              "GroupDN": "CN=IT Support,CN=Users,DC=garfield,DC=htb",
+              "Member": "j.arbuckle",
+              "MemberDN": "CN=Jon Arbuckle,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Tier 1",
+              "GroupDN": "CN=Tier 1,CN=Users,DC=garfield,DC=htb",
+              "Member": "l.wilson_adm",
+              "MemberDN": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "member"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "Administrator",
+              "MemberDN": "CN=Administrator,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Guests",
+              "GroupDN": "CN=Domain Guests,CN=Users,DC=garfield,DC=htb",
+              "Member": "Guest",
+              "MemberDN": "CN=Guest,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "krbtgt",
+              "MemberDN": "CN=krbtgt,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "krbtgt_8245",
+              "MemberDN": "CN=krbtgt_8245,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "j.arbuckle",
+              "MemberDN": "CN=Jon Arbuckle,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "l.wilson",
+              "MemberDN": "CN=Liz Wilson,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Users",
+              "GroupDN": "CN=Domain Users,CN=Users,DC=garfield,DC=htb",
+              "Member": "l.wilson_adm",
+              "MemberDN": "CN=Liz Wilson ADM,CN=Users,DC=garfield,DC=htb",
+              "MemberType": "user",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Domain Controllers",
+              "GroupDN": "CN=Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "Member": "DC01$",
+              "MemberDN": "CN=DC01,OU=Domain Controllers,DC=garfield,DC=htb",
+              "MemberType": "computer",
+              "Via": "primaryGroupID"
+            },
+            {
+              "Group": "Read-only Domain Controllers",
+              "GroupDN": "CN=Read-only Domain Controllers,CN=Users,DC=garfield,DC=htb",
+              "Member": "RODC01$",
+              "MemberDN": "CN=RODC01,OU=Domain Controllers,DC=garfield,DC=htb",
+              "MemberType": "computer",
+              "Via": "primaryGroupID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Access Control",
+      "severity": "warn",
+      "tables": [
+        {
+          "name": "AdminSDHolder",
+          "file": "AdminSDHolder.json",
+          "severity": "warn",
+          "columns": [
+            "PrincipalName",
+            "PrincipalSID",
+            "ACE_Type",
+            "Rights",
+            "ObjectType",
+            "InheritedObjectType"
+          ],
+          "rows": [
+            {
+              "ACE_Type": "Owner",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "Rights": ""
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "4c164200-20c0-11d0-a768-00aa006e0529",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "4c164200-20c0-11d0-a768-00aa006e0529",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "5f202010-79a5-11d0-9020-00c04fc2d4cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "5f202010-79a5-11d0-9020-00c04fc2d4cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "bc0ac240-79a9-11d0-9020-00c04fc2d4cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "bc0ac240-79a9-11d0-9020-00c04fc2d4cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "59ba2f42-79a2-11d0-9020-00c04fc2d3cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "59ba2f42-79a2-11d0-9020-00c04fc2d3cf",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "037088f8-0ae1-11d2-b422-00a0c968f939",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "037088f8-0ae1-11d2-b422-00a0c968f939",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "bf967a7f-0de6-11d0-a285-00aa003049e2",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-517",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-517",
+              "Rights": "ReadProperty | WriteProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "46a9b11d-60ae-405a-b7e8-ff8a58d456d2",
+              "PrincipalName": "S-1-5-32-560",
+              "PrincipalSID": "S-1-5-32-560",
+              "Rights": "ReadProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "6db69a1c-9422-11d1-aebd-0000f80367c1",
+              "PrincipalName": "S-1-5-32-561",
+              "PrincipalSID": "S-1-5-32-561",
+              "Rights": "ReadProperty | WriteProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "5805bc62-bdc9-4428-a5e2-856a0f4c185e",
+              "PrincipalName": "S-1-5-32-561",
+              "PrincipalSID": "S-1-5-32-561",
+              "Rights": "ReadProperty | WriteProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "4828cc14-1437-45bc-9b07-ad6f015e5f28",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadControl | ReadProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "bf967aba-0de6-11d0-a285-00aa003049e2",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-32-554",
+              "PrincipalSID": "S-1-5-32-554",
+              "Rights": "ReadControl | ReadProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "ab721a53-1e2f-11d0-9819-00aa0040529b",
+              "PrincipalName": "S-1-1-0",
+              "PrincipalSID": "S-1-1-0",
+              "Rights": "ExtendedRight"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "ab721a53-1e2f-11d0-9819-00aa0040529b",
+              "PrincipalName": "S-1-5-10",
+              "PrincipalSID": "S-1-5-10",
+              "Rights": "ExtendedRight"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "InheritedObjectType": "",
+              "ObjectType": "91e647de-d96f-4b70-9557-d63ff4f3ccd8",
+              "PrincipalName": "S-1-5-10",
+              "PrincipalSID": "S-1-5-10",
+              "Rights": "ExtendedRight | ReadProperty | WriteProperty"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "Rights": "WriteDacl | WriteOwner | ReadControl | ExtendedRight | CreateChild | DeleteChild | Self | ReadProperty | WriteProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-519",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-519",
+              "Rights": "WriteDacl | WriteOwner | ReadControl | ExtendedRight | CreateChild | DeleteChild | Self | ReadProperty | WriteProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-32-544",
+              "PrincipalSID": "S-1-5-32-544",
+              "Rights": "WriteDacl | WriteOwner | ReadControl | Delete | ExtendedRight | CreateChild | DeleteChild | Self | ReadProperty | WriteProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-11",
+              "PrincipalSID": "S-1-5-11",
+              "Rights": "ReadControl | ReadProperty | ListObject"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "InheritedObjectType": "",
+              "ObjectType": "",
+              "PrincipalName": "S-1-5-18",
+              "PrincipalSID": "S-1-5-18",
+              "Rights": "WriteDacl | WriteOwner | ReadControl | Delete | ExtendedRight | CreateChild | DeleteChild | Self | ReadProperty | WriteProperty | DeleteTree | ListObject"
+            }
+          ]
+        },
+        {
+          "name": "CreatorSID_User",
+          "file": "CreatorSID_User.json",
+          "severity": "warn",
+          "columns": [
+            "sAMAccountName",
+            "mS-DS-CreatorSID",
+            "CreatorUser"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "name": "Vulnerabilities",
+      "severity": "crit",
+      "tables": [
+        {
+          "name": "AsReproast_User",
+          "file": "AsReproast_User.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "servicePrincipalName",
+            "msDS-SupportedEncryptionTypes",
+            "mail",
+            "whenCreated",
+            "lastLogon",
+            "memberOf"
+          ],
+          "rows": []
+        },
+        {
+          "name": "ConstrainedDeligation",
+          "file": "ConstrainedDeligation.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "userAccountControl",
+            "whenCreated",
+            "whenChanged",
+            "msDS-AllowedToDelegateTo"
+          ],
+          "rows": [
+            {
+              "distinguishedName": "CN=RODC01,OU=Domain Controllers,DC=garfield,DC=htb",
+              "msDS-AllowedToDelegateTo": "",
+              "sAMAccountName": "RODC01$",
+              "userAccountControl": "Yes (TRUSTED_TO_AUTH_FOR_DELEGATION)",
+              "whenChanged": "20260827080423.0Z",
+              "whenCreated": "20250817113339.0Z"
+            }
+          ]
+        },
+        {
+          "name": "DCSync_Rights",
+          "file": "DCSync_Rights.json",
+          "severity": "crit",
+          "columns": [
+            "PrincipalName",
+            "PrincipalSID",
+            "Right",
+            "ACE_Type",
+            "Notes"
+          ],
+          "rows": [
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-498",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-498",
+              "Right": "GetChanges"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-516",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-516",
+              "Right": "GetChangesAll"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "",
+              "PrincipalName": "S-1-5-32-544",
+              "PrincipalSID": "S-1-5-32-544",
+              "Right": "GetChangesInFilteredSet"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "DCSync-capable",
+              "PrincipalName": "S-1-5-32-544",
+              "PrincipalSID": "S-1-5-32-544",
+              "Right": "GetChanges"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "DCSync-capable",
+              "PrincipalName": "S-1-5-32-544",
+              "PrincipalSID": "S-1-5-32-544",
+              "Right": "GetChangesAll"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "",
+              "PrincipalName": "S-1-5-9",
+              "PrincipalSID": "S-1-5-9",
+              "Right": "GetChangesInFilteredSet"
+            },
+            {
+              "ACE_Type": "AccessAllowedObject",
+              "Notes": "",
+              "PrincipalName": "S-1-5-9",
+              "PrincipalSID": "S-1-5-9",
+              "Right": "GetChanges"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "Notes": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-512",
+              "Right": "AllExtendedRights"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "Notes": "",
+              "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-519",
+              "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-519",
+              "Right": "AllExtendedRights"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "Notes": "",
+              "PrincipalName": "S-1-5-32-544",
+              "PrincipalSID": "S-1-5-32-544",
+              "Right": "AllExtendedRights"
+            },
+            {
+              "ACE_Type": "AccessAllowed",
+              "Notes": "",
+              "PrincipalName": "S-1-5-18",
+              "PrincipalSID": "S-1-5-18",
+              "Right": "AllExtendedRights"
+            }
+          ]
+        },
+        {
+          "name": "GMSA_Readers",
+          "file": "GMSA_Readers.json",
+          "severity": "crit",
+          "columns": [
+            "GMSA",
+            "GMSA_DN",
+            "ReaderName",
+            "ReaderSID",
+            "Rights"
+          ],
+          "rows": []
+        },
+        {
+          "name": "Kerberoast_User",
+          "file": "Kerberoast_User.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "servicePrincipalName",
+            "msDS-SupportedEncryptionTypes"
+          ],
+          "rows": [
+            {
+              "distinguishedName": "CN=krbtgt,CN=Users,DC=garfield,DC=htb",
+              "msDS-SupportedEncryptionTypes": "0",
+              "sAMAccountName": "krbtgt",
+              "servicePrincipalName": "kadmin/changepw"
+            }
+          ]
+        },
+        {
+          "name": "LAPS_Passwords",
+          "file": "LAPS_Passwords.json",
+          "severity": "crit",
+          "columns": [
+            "dNSHostName",
+            "ms-Mcs-AdmPwd",
+            "ms-Mcs-AdmPwdExpirationTime"
+          ],
+          "rows": []
+        },
+        {
+          "name": "LAPS_Rights",
+          "file": "LAPS_Rights.json",
+          "severity": "crit",
+          "columns": [
+            "Computer",
+            "ComputerDN",
+            "PrincipalName",
+            "PrincipalSID",
+            "Right",
+            "Notes"
+          ],
+          "rows": []
+        },
+        {
+          "name": "MS17_Candidates",
+          "file": "MS17_Candidates.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "dNSHostName",
+            "operatingSystem",
+            "operatingSystemVersion",
+            "whenCreated",
+            "lastLogon",
+            "MS17Candidate"
+          ],
+          "rows": []
+        },
+        {
+          "name": "Pre2k_Candidates",
+          "file": "Pre2k_Candidates.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "pwdLastSet",
+            "whenCreated",
+            "lastLogon",
+            "Pre2kCandidate"
+          ],
+          "rows": []
+        },
+        {
+          "name": "RBCD",
+          "file": "RBCD.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "AllowedPrincipalSID",
+            "AllowedPrincipalName",
+            "whenCreated",
+            "whenChanged"
+          ],
+          "rows": []
+        },
+        {
+          "name": "SIDHistory_User",
+          "file": "SIDHistory_User.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "mail",
+            "sIDHistory",
+            "whenCreated",
+            "SidUser"
+          ],
+          "rows": []
+        },
+        {
+          "name": "SensitiveDelegate_User",
+          "file": "SensitiveDelegate_User.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "adminCount",
+            "memberOf",
+            "mail",
+            "whenCreated",
+            "lastLogon"
+          ],
+          "rows": []
+        },
+        {
+          "name": "UnconstrainedDeligation",
+          "file": "UnconstrainedDeligation.json",
+          "severity": "crit",
+          "columns": [
+            "sAMAccountName",
+            "distinguishedName",
+            "operatingSystem",
+            "whenCreated",
+            "whenChanged"
+          ],
+          "rows": []
+        }
+      ]
+    }
+  ]
+}

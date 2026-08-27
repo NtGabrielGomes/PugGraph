@@ -1,0 +1,42 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/domain",
+    "crates/crypto",
+    "crates/crdt",
+    "crates/import",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+license = "Proprietary"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+ulid = "1.2"
+base64 = "0.22"
+roxmltree = "0.21.1"
+
+loro = "1.13.1"
+
+chacha20poly1305 = "0.10"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+hkdf = "0.13.0"
+sha2 = "0.11.0"
+argon2 = "0.5"
+zeroize = { version = "1.8", features = ["derive"] }
+rand = { version = "0.10.1", features = ["std"] }
+rand_core = "0.10.1"
+
+proptest = "1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+panic = "abort"

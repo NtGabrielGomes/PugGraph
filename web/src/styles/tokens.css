@@ -1,0 +1,113 @@
+:root {
+  --bg-0: #070707;
+  --bg-1: #0b0b0b;
+  --surface-1: #121212;
+  --surface-2: #171717;
+  --surface-3: #1e1e1e;
+  --surface-hi: #282828;
+
+  --border: #2c2c2c;
+  --border-soft: #1c1c1c;
+  --border-strong: #3d3d3d;
+
+  --text: #f5f5f5;
+  --text-muted: #b3b3b3;
+  --text-faint: #969696;
+
+  --accent: #ececec;
+  --accent-hi: #ffffff;
+  --accent-fg: #0b0b0b;
+  --accent-weak: rgba(236, 236, 236, .10);
+  --accent-line: rgba(236, 236, 236, .30);
+
+  --green: #5aa170;
+  --yellow: #d4b257;
+  --orange: #db8038;
+  --red: #d9554e;
+  --magenta: #d65a8c;
+  --bronze: #c0925a;
+  --olive: #9ca35f;
+  --sand: #cbb187;
+  --purple: #a085c8;
+  --gold: #d4af37;
+  --teal: #6fae9c;
+  --neutral: #9a9a9a;
+
+  --cmp-unknown: #5a5a5a;
+  --cmp-none: var(--green);
+  --cmp-user: var(--yellow);
+  --cmp-admin: var(--orange);
+  --cmp-system: var(--red);
+  --cmp-domain-admin: var(--magenta);
+
+  --sev-info: var(--text-faint);
+  --sev-low: var(--green);
+  --sev-medium: var(--yellow);
+  --sev-high: var(--orange);
+  --sev-critical: var(--red);
+
+  --edge-priv: var(--orange);
+  --edge-cred: var(--green);
+  --edge-trust: var(--bronze);
+  --edge-fg: #8a8a8a;
+  --edge-dim: #46464a;
+
+  --ok: var(--green);
+  --ok-bg: rgba(95, 184, 122, .13);
+  --ok-line: rgba(95, 184, 122, .34);
+  --warn: var(--yellow);
+  --err: var(--red);
+  --idle: #5d5d5d;
+  --collab: var(--teal);
+  --collab-bg: rgba(111, 174, 156, .14);
+  --secret: var(--yellow);
+  --danger: var(--red);
+  --danger-line: rgba(224, 86, 79, .36);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --ls-label: 0.08em;
+
+  --fs-meta: 11px;
+  --fs-base: 13px;
+  --fs-title: 15px;
+  --fs-display: 18px;
+  --lh-tight: 1.3;
+  --lh-base: 1.5;
+
+  --sp-1: 2px;
+  --sp-2: 4px;
+  --sp-3: 6px;
+  --sp-4: 8px;
+  --sp-5: 12px;
+  --sp-6: 16px;
+  --sp-7: 20px;
+  --sp-8: 24px;
+  --sp-9: 32px;
+
+  --ctl-h: 32px;
+  --ctl-h-sm: 26px;
+  --ctl-px: 10px;
+  --ctl-py: 7px;
+  --ctl-pad: var(--ctl-py) var(--ctl-px);
+  --ctl-pad-sm: 4px 8px;
+  --field-gap: var(--sp-3);
+  --form-gap: var(--sp-6);
+
+  --r-xs: 0px;
+  --r-md: 0px;
+  --r-lg: 2px;
+  --bw-thick: 2px;
+
+  --shadow-pop: 0 8px 24px -6px rgba(0, 0, 0, .7);
+  --shadow-modal: 0 20px 56px -10px rgba(0, 0, 0, .78);
+  --backdrop: rgba(2, 2, 2, .76);
+  --ring: 0 0 0 2px var(--accent);
+
+  color-scheme: dark;
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}

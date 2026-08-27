@@ -1,0 +1,46 @@
+# Fuzz targets for the scanner parsers. Detached from the core workspace (its own
+# empty [workspace] table) so it is built ONLY by `cargo +nightly fuzz run`,
+# never by `cargo test --workspace`. Requires the nightly toolchain and
+# `cargo install cargo-fuzz`.
+[package]
+name = "import-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[workspace]
+
+[dependencies]
+libfuzzer-sys = "0.4"
+import = { path = ".." }
+
+[[bin]]
+name = "nmap"
+path = "fuzz_targets/nmap.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "bloodhound"
+path = "fuzz_targets/bloodhound.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "netexec"
+path = "fuzz_targets/netexec.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "nessus"
+path = "fuzz_targets/nessus.rs"
+test = false
+doc = false
+bench = false

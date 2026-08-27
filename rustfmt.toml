@@ -1,0 +1,3 @@
+# Workspace rustfmt configuration
+# Ensure tools that invoke rustfmt directly use the same edition as Cargo.
+edition = "2021"

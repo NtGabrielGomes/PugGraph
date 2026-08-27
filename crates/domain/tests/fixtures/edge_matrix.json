@@ -1,0 +1,797 @@
+{
+  "edge_rules": {
+    "add_member": {
+      "dst_classes": [
+        "group"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "add_self": {
+      "dst_classes": [
+        "group"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "admin_to": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "affects": {
+      "dst_classes": [
+        "ad_structure",
+        "cloud",
+        "group",
+        "host",
+        "principal",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "finding"
+      ]
+    },
+    "all_extended_rights": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "allowed_to_act": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "allowed_to_delegate": {
+      "dst_classes": [
+        "host",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "authenticates_as": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [
+        "domain"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "cert_template",
+        "certificate_authority"
+      ]
+    },
+    "can_asrep_roast": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "can_kerberoast": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "can_ps_remote": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "can_rdp": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "can_ssh": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "coerce": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "connects_to": {
+      "dst_classes": [
+        "cloud",
+        "host",
+        "network",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "cloud",
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "contains_ou": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "organizational_unit"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "domain",
+        "organizational_unit"
+      ]
+    },
+    "credential_valid_for": {
+      "dst_classes": [
+        "cloud",
+        "host",
+        "principal",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "custom": {
+      "dst_classes": [],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": []
+    },
+    "dc_for": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "domain_controller"
+      ]
+    },
+    "dc_sync": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain"
+      ],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "dumped_from": {
+      "dst_classes": [
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "enroll": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "cert_template"
+      ],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "enroll_on_behalf_of": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "cert_template"
+      ],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "evidence_for": {
+      "dst_classes": [
+        "ad_structure",
+        "cloud",
+        "group",
+        "host",
+        "principal",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "loot"
+      ]
+    },
+    "execute_dcom": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "exploitable_via": {
+      "dst_classes": [
+        "ad_structure",
+        "cloud",
+        "group",
+        "host",
+        "principal",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "ad_structure",
+        "cloud",
+        "group",
+        "host",
+        "principal",
+        "service"
+      ],
+      "src_kinds": []
+    },
+    "force_change_password": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "generic_all": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "generic_write": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "gpo_applies_to": {
+      "dst_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "gpo"
+      ]
+    },
+    "has_local_admin": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "has_session": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "hosted_on": {
+      "dst_classes": [
+        "host",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "web_application"
+      ]
+    },
+    "hosts_vm": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "virtual_machine"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "hypervisor"
+      ]
+    },
+    "lateral_movement": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "linked_gpo": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain",
+        "organizational_unit"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "gpo"
+      ]
+    },
+    "listens_on": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "service"
+      ],
+      "src_kinds": []
+    },
+    "looted_from": {
+      "dst_classes": [
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "loot"
+      ]
+    },
+    "manage_ca": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "certificate_authority"
+      ],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "member_of": {
+      "dst_classes": [
+        "group"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "member_of_domain": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain"
+      ],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "owns": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "parent_segment": {
+      "dst_classes": [
+        "network"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "pivot_established": {
+      "dst_classes": [
+        "host",
+        "network"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "priv_esc": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "published_to": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "certificate_authority"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "cert_template"
+      ]
+    },
+    "reachable_from": {
+      "dst_classes": [
+        "cloud",
+        "host",
+        "network",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "read_gmsa_password": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "read_laps_password": {
+      "dst_classes": [
+        "host"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "relay_to": {
+      "dst_classes": [
+        "host",
+        "service"
+      ],
+      "dst_kinds": [
+        "certificate_authority"
+      ],
+      "src_classes": [
+        "host",
+        "principal",
+        "service"
+      ],
+      "src_kinds": []
+    },
+    "routes_through": {
+      "dst_classes": [
+        "host",
+        "network"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "runs_container": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "container"
+      ],
+      "src_classes": [
+        "host"
+      ],
+      "src_kinds": []
+    },
+    "same_segment": {
+      "dst_classes": [
+        "host",
+        "network"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "host",
+        "network"
+      ],
+      "src_kinds": []
+    },
+    "shadow_credentials": {
+      "dst_classes": [
+        "host",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "sql_admin": {
+      "dst_classes": [
+        "host",
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "host",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "sql_link": {
+      "dst_classes": [
+        "service"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "service"
+      ],
+      "src_kinds": []
+    },
+    "trusts": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain",
+        "forest"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "domain",
+        "forest"
+      ]
+    },
+    "unconstrained_delegation": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain"
+      ],
+      "src_classes": [
+        "host"
+      ],
+      "src_kinds": [
+        "computer_account"
+      ]
+    },
+    "vm_hosted_on": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "hypervisor"
+      ],
+      "src_classes": [],
+      "src_kinds": [
+        "virtual_machine"
+      ]
+    },
+    "write_dacl": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "write_gp_link": {
+      "dst_classes": [],
+      "dst_kinds": [
+        "domain",
+        "organizational_unit"
+      ],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "write_owner": {
+      "dst_classes": [
+        "ad_structure",
+        "group",
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "write_spn": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [
+        "group",
+        "principal"
+      ],
+      "src_kinds": []
+    },
+    "yields_credential": {
+      "dst_classes": [
+        "principal"
+      ],
+      "dst_kinds": [],
+      "src_classes": [],
+      "src_kinds": [
+        "loot"
+      ]
+    }
+  },
+  "node_classes": {
+    "cert_template": "ad_structure",
+    "certificate_authority": "ad_structure",
+    "cloud_identity": "cloud",
+    "cloud_resource": "cloud",
+    "computer_account": "principal",
+    "container": "host",
+    "container_host": "host",
+    "custom": "custom",
+    "domain": "ad_structure",
+    "domain_controller": "host",
+    "finding": "finding",
+    "forest": "ad_structure",
+    "gpo": "ad_structure",
+    "group": "group",
+    "host_linux": "host",
+    "host_macos": "host",
+    "host_windows": "host",
+    "hypervisor": "host",
+    "loot": "artifact",
+    "network_device": "host",
+    "network_segment": "network",
+    "organizational_unit": "ad_structure",
+    "service": "service",
+    "service_account": "principal",
+    "share": "share",
+    "subnet": "network",
+    "user_account": "principal",
+    "virtual_machine": "host",
+    "vlan": "network",
+    "web_application": "service"
+  }
+}

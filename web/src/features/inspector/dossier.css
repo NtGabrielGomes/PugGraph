@@ -1,0 +1,484 @@
+/* Node/edge dossier — typed fields, findings, relations, chips, the bulk bar. */
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.detail .row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-xs);
+  flex: 0 0 auto;
+}
+
+.detail .kind {
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+}
+
+.detail>.field>span:first-child {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: var(--field-gap);
+}
+
+.detail>.field {
+  margin-bottom: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  margin-bottom: var(--form-gap);
+}
+
+.field>span {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+}
+
+.field input {
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  min-height: var(--ctl-h);
+  font-size: var(--fs-base);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.chip {
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-meta);
+  font-family: var(--font-mono);
+}
+
+.chip.tag {
+  color: var(--accent);
+}
+
+.labeledit {
+  flex: 1;
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  font-weight: 700;
+  font-size: var(--fs-title);
+}
+
+.labeledit:hover {
+  border-color: var(--border);
+}
+
+.labeledit:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.cues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+  min-height: var(--sp-2);
+}
+
+.addrow {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.addrow input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  font-size: var(--fs-base);
+}
+
+.addrow input.small {
+  flex: 0 0 92px;
+}
+
+.addrow .selecttrigger {
+  flex: 0 0 130px;
+}
+
+.addrow button {
+  background: var(--surface-3);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-py) var(--sp-4);
+  min-height: var(--ctl-h);
+  cursor: pointer;
+}
+
+.chip .x,
+.credtop .x {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0 0 var(--sp-2);
+  font-size: var(--fs-meta);
+}
+
+.chip .x:hover,
+.credtop .x:hover {
+  color: var(--danger);
+}
+
+.kvrow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) 0;
+}
+
+.kvrow code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.kvrow .val {
+  color: var(--text);
+  flex: 1;
+  word-break: break-all;
+}
+
+button.danger {
+  margin-top: var(--sp-3);
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-py) var(--sp-3);
+  min-height: var(--ctl-h);
+  cursor: pointer;
+  font-size: var(--fs-meta);
+}
+
+button.danger:hover {
+  border-color: var(--danger-line);
+}
+
+.tfgrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.tf {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  flex: 1 1 calc(50% - 6px);
+  min-width: 0;
+}
+
+.tf.wide {
+  flex-basis: 100%;
+}
+
+.tf.bool {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: var(--ctl-h);
+  font-size: var(--fs-meta);
+  color: var(--text);
+  line-height: 1;
+}
+
+.tf.bool input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: 0 0 auto;
+  align-self: center;
+  accent-color: var(--accent);
+}
+
+.tf.bool span {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.tf>span {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+}
+
+.tf input,
+.tf textarea {
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  min-height: var(--ctl-h);
+  font-size: var(--fs-base);
+  width: 100%;
+  font-family: var(--font-mono);
+}
+
+.tf textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.tf input:focus,
+.tf textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.finding {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) 0;
+}
+
+.finding .sevdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.finding .ftitle {
+  flex: 1;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.finding .selecttrigger {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.svclist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.svc {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+}
+
+.svc:hover {
+  border-color: var(--accent-line);
+}
+
+.svc code {
+  color: var(--edge-fg);
+  font-family: var(--font-mono);
+}
+
+.credref {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) 0;
+}
+
+.credref .rel {
+  color: var(--accent);
+  font-size: var(--fs-meta);
+}
+
+.detailactions {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+
+.detailactions .ghost {
+  flex: 0 0 auto;
+}
+
+.detailactions .danger {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.rels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.relrow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-meta);
+}
+
+.reledit {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-2) 0;
+  flex: 0 0 auto;
+}
+
+.reledit:hover .relkind {
+  text-decoration: underline;
+}
+
+.reldir {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+.relkind {
+  font-family: var(--font-mono);
+}
+
+.relother {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  text-align: left;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: var(--sp-2) 0;
+  min-width: 0;
+}
+
+.relother:hover {
+  color: var(--text);
+}
+
+.bulkbar {
+  position: fixed;
+  bottom: 58px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: calc(100vw - 2 * var(--sp-6));
+  align-items: center;
+  gap: var(--sp-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  padding: var(--sp-3) var(--sp-4);
+}
+
+.bulkbar .bulkcount {
+  font-size: var(--fs-meta);
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bulkbar input {
+  min-width: 0;
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  font-size: var(--fs-base);
+}
+
+.bulkbar .selecttrigger {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.bulkbar .bulkfield {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+}
+
+.bulkbar button {
+  padding: var(--ctl-py) var(--sp-4);
+  min-height: var(--ctl-h);
+  border-radius: var(--r-md);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.bulkbar button.danger {
+  color: var(--danger);
+  background: transparent;
+  margin: 0;
+}
+
+.bulkbar button.danger:hover {
+  border-color: var(--danger-line);
+}
+
+.bulkbar button.ghost {
+  color: var(--text-muted);
+}

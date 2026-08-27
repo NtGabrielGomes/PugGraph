@@ -1,0 +1,122 @@
+.searchbar {
+  position: relative;
+  width: 100%;
+}
+
+.searchinput {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: var(--ctl-h);
+  padding: 0 var(--sp-2) 0 var(--sp-4);
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text-faint);
+}
+
+.searchinput:focus-within {
+  border-color: var(--accent);
+}
+
+.searchicon {
+  flex: 0 0 auto;
+}
+
+.searchinput input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: var(--fs-base);
+  padding: 0;
+}
+
+.searchinput input:focus,
+.searchinput input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.searchinput .searchfilters {
+  flex: 0 0 auto;
+  gap: var(--sp-2);
+}
+
+.searchinput .searchfilters button {
+  background: transparent;
+  color: var(--text-faint);
+  border: 1px solid transparent;
+  border-radius: var(--r-xs);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) var(--sp-4);
+}
+
+.searchinput .searchfilters button:hover {
+  color: var(--text-muted);
+}
+
+.searchinput .searchfilters button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.searchresults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: var(--sp-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  max-height: 320px;
+  overflow: auto;
+  z-index: 40;
+  box-shadow: var(--shadow-pop);
+  list-style: none;
+  padding: 0;
+}
+
+.searchresults li {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.searchresults li:hover {
+  background: var(--surface-hi);
+}
+
+.searchresults .lbl {
+  flex: 1;
+  font-size: var(--fs-meta);
+}
+
+.badge {
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-radius: var(--r-xs);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.badge.b-node {
+  color: var(--accent);
+}
+
+.badge.b-credential {
+  color: var(--secret);
+}
+
+.badge.b-event {
+  color: var(--text-muted);
+}
+

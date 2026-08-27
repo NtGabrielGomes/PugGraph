@@ -1,0 +1,384 @@
+/* Credential vault — grouped loot, entity links, spray-test chips. */
+
+.vault h2 {
+  margin: 0 0 var(--sp-4);
+}
+
+.creds {
+  list-style: none;
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+}
+
+.creds>li {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+
+.creds>li.muted {
+  border: none;
+  padding: 0;
+}
+
+.credtop {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+  font-size: var(--fs-meta);
+}
+
+.credtop strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
+.credtop .ctype {
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+}
+
+.credtop .selecttrigger {
+  margin-left: auto;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.credbot {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  font-size: var(--fs-meta);
+  margin-top: var(--sp-2);
+}
+
+.credbot .secret {
+  color: var(--secret);
+  word-break: break-all;
+  background: var(--bg-0);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+}
+
+.reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  border-radius: var(--r-xs);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) var(--sp-3);
+  cursor: pointer;
+}
+
+.reveal:hover {
+  color: var(--text);
+  border-color: var(--accent-line);
+}
+
+.addcred {
+  background: var(--surface-3);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-py);
+  min-height: var(--ctl-h);
+  width: 100%;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+}
+
+.addcred:hover {
+  color: var(--text);
+}
+
+.credadd {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap);
+}
+
+.credadd input {
+  background: var(--bg-0);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--ctl-pad);
+  font-size: var(--fs-base);
+}
+
+.credselects {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.credselects>* {
+  flex: 1;
+  min-width: 0;
+}
+
+.credactions {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.credactions button {
+  flex: 1;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: var(--r-md);
+  padding: var(--ctl-py);
+  min-height: var(--ctl-h);
+  cursor: pointer;
+}
+
+.credactions button[type="button"] {
+  background: var(--surface-3);
+  color: var(--text-muted);
+}
+
+.vaultn {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+.vaultsearch {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  background: var(--bg-0);
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 0 var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.vaultsearch input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: var(--fs-base);
+  padding: var(--ctl-py) 0;
+}
+
+.vaultsearch input:focus {
+  outline: none;
+}
+
+.vaultempty {
+  line-height: var(--lh-base);
+}
+
+.credgroup {
+  margin-bottom: var(--sp-5);
+}
+
+.credgrouphead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: var(--sp-3);
+}
+
+.credgrouphead .n {
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+.vdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--idle);
+}
+
+.vdot.v-valid {
+  background: var(--ok);
+}
+
+.vdot.v-invalid {
+  background: var(--err);
+}
+
+.vdot.v-expired {
+  background: var(--warn);
+}
+
+.vdot.v-rotated {
+  background: var(--collab);
+}
+
+.credjump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.jchip {
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--r-xs);
+  font-size: var(--fs-meta);
+  font-family: var(--font-mono);
+  padding: var(--sp-2) var(--sp-3);
+  cursor: pointer;
+}
+
+.jchip.from {
+  color: var(--text-faint);
+}
+
+.jchip:hover {
+  color: var(--text);
+  border-color: var(--accent-line);
+}
+
+.credlinks {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.credlinks label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  flex: 1;
+}
+
+.credlinks span {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+}
+
+.credlinks .selecttrigger {
+  width: 100%;
+}
+
+.credtests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.testchip {
+  font-size: var(--fs-meta);
+  border-radius: var(--r-xs);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  background: transparent;
+  cursor: pointer;
+}
+
+.testchip.ok {
+  color: var(--ok);
+  border-color: var(--ok-line);
+}
+
+.testchip.no {
+  color: var(--err);
+  border-color: var(--danger-line);
+}
+
+.testchip:hover {
+  background: var(--surface-hi);
+}
+
+.addtest {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  align-items: center;
+}
+
+.addtest .selecttrigger {
+  flex: 1;
+}
+
+.addtest button {
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text);
+  border-radius: var(--r-xs);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) var(--sp-3);
+  cursor: pointer;
+}
+
+.addtest .tok {
+  color: var(--ok);
+}
+
+.addtest .tno {
+  color: var(--err);
+}
+
+.addtestbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  border-radius: var(--r-xs);
+  font-size: var(--fs-meta);
+  padding: var(--sp-2) var(--sp-3);
+  cursor: pointer;
+}
+
+.addtestbtn:hover {
+  color: var(--text);
+  border-color: var(--accent-line);
+}
+
+.addcred {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+}
+
+.credadd .subhead {
+  margin-bottom: var(--sp-2);
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+  padding: var(--sp-3) 0 0;
+  text-decoration: underline;
+}
+
+.linklike:hover {
+  color: var(--text);
+}

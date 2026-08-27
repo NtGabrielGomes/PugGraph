@@ -1,0 +1,15 @@
+[package]
+name = "import"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "scanner import pipeline. parses tool output into the reconciled campaign graph."
+
+[dependencies]
+domain = { path = "../domain" }
+crdt = { path = "../crdt" }
+roxmltree = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

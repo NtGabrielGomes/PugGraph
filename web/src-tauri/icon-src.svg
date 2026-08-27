@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#0e0f12"/>
+  <rect x="40" y="40" width="944" height="944" fill="none" stroke="#23272e" stroke-width="14"/>
+
+  <!-- edges drawn as filled quads (ImageMagick MSVG renders fills, not strokes), behind nodes -->
+  <!-- A->B steel -->
+  <polygon points="329.4,368.7 334.6,343.3 702.6,417.3 697.4,442.7" fill="#5a626e"/>
+  <!-- B->C steel -->
+  <polygon points="688.6,423.8 711.4,436.2 551.4,730.2 528.6,717.8" fill="#5a626e"/>
+  <!-- A->C privilege (red) -->
+  <polygon points="318.9,363.4 345.1,348.6 553.1,716.6 526.9,731.4" fill="#d23a5e"/>
+
+  <!-- node A (asset) -->
+  <rect x="246" y="270" width="172" height="172" fill="#e8eaed"/>
+  <rect x="276" y="300" width="112" height="86" fill="#0e0f12"/>
+
+  <!-- node B (asset) -->
+  <rect x="614" y="344" width="172" height="172" fill="#e8eaed"/>
+  <rect x="644" y="374" width="112" height="86" fill="#0e0f12"/>
+
+  <!-- node C (compromised apex) -->
+  <rect x="454" y="638" width="172" height="172" fill="#d23a5e"/>
+  <rect x="484" y="668" width="112" height="86" fill="#2a0b14"/>
+</svg>

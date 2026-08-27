@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "All filesystem and secret access is mediated by the app's own typed, folder-scoped commands (which are not gated here); the webview is granted only event listening, focus, and dev-tools toggling. No fs/shell/http plugin permissions are exposed to the frontend.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:event:allow-listen",
+    "core:event:allow-unlisten",
+    "core:event:allow-emit",
+    "core:window:allow-set-focus",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:webview:allow-internal-toggle-devtools"
+  ]
+}

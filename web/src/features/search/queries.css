@@ -1,0 +1,97 @@
+/* Pre-built queries panel — BloodHound/Pughound-style query catalog with live
+ * counts. Sits at the top of the left column. The abuse card it opens lives in
+ * the inspector (inspector.css, .abuse*). */
+
+.pbq {
+  border-bottom: 1px solid var(--border-soft);
+  padding: var(--sp-3);
+  flex: 0 0 auto;
+  max-height: 45%;
+  overflow-y: auto;
+}
+
+.pbqhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-2);
+}
+
+.pbqtitle {
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-faint);
+}
+
+.pbqgroup {
+  margin-top: var(--sp-1);
+}
+
+.pbqgrouphead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: var(--sp-1) 0;
+  cursor: pointer;
+}
+
+.pbqgrouphead .flip-left {
+  transform: rotate(-90deg);
+}
+
+.pbqbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--r-xs);
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  font-family: var(--font-mono);
+  padding: var(--sp-1) var(--sp-2);
+  cursor: pointer;
+  text-align: left;
+}
+
+.pbqbtn:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.pbqbtn.active {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--accent-weak);
+}
+
+.pbqbtn:disabled {
+  opacity: .38;
+  cursor: default;
+}
+
+.pbqname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pbqcount {
+  color: var(--text-faint);
+  flex: 0 0 auto;
+}
+
+.pbqbtn.active .pbqcount {
+  color: var(--accent);
+}
+

@@ -1,0 +1,90 @@
+{
+  "columns": [
+    "PrincipalName",
+    "PrincipalSID",
+    "Right",
+    "ACE_Type",
+    "Notes"
+  ],
+  "query": "DCSync_Rights",
+  "rowCount": 11,
+  "rows": [
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "",
+      "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-498",
+      "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-498",
+      "Right": "GetChanges"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "",
+      "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-516",
+      "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-516",
+      "Right": "GetChangesAll"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "",
+      "PrincipalName": "S-1-5-32-544",
+      "PrincipalSID": "S-1-5-32-544",
+      "Right": "GetChangesInFilteredSet"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "DCSync-capable",
+      "PrincipalName": "S-1-5-32-544",
+      "PrincipalSID": "S-1-5-32-544",
+      "Right": "GetChanges"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "DCSync-capable",
+      "PrincipalName": "S-1-5-32-544",
+      "PrincipalSID": "S-1-5-32-544",
+      "Right": "GetChangesAll"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "",
+      "PrincipalName": "S-1-5-9",
+      "PrincipalSID": "S-1-5-9",
+      "Right": "GetChangesInFilteredSet"
+    },
+    {
+      "ACE_Type": "AccessAllowedObject",
+      "Notes": "",
+      "PrincipalName": "S-1-5-9",
+      "PrincipalSID": "S-1-5-9",
+      "Right": "GetChanges"
+    },
+    {
+      "ACE_Type": "AccessAllowed",
+      "Notes": "",
+      "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-512",
+      "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-512",
+      "Right": "AllExtendedRights"
+    },
+    {
+      "ACE_Type": "AccessAllowed",
+      "Notes": "",
+      "PrincipalName": "S-1-5-21-2502726253-3859040611-225969357-519",
+      "PrincipalSID": "S-1-5-21-2502726253-3859040611-225969357-519",
+      "Right": "AllExtendedRights"
+    },
+    {
+      "ACE_Type": "AccessAllowed",
+      "Notes": "",
+      "PrincipalName": "S-1-5-32-544",
+      "PrincipalSID": "S-1-5-32-544",
+      "Right": "AllExtendedRights"
+    },
+    {
+      "ACE_Type": "AccessAllowed",
+      "Notes": "",
+      "PrincipalName": "S-1-5-18",
+      "PrincipalSID": "S-1-5-18",
+      "Right": "AllExtendedRights"
+    }
+  ]
+}
