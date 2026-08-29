@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "@/state/store";
-import { mapApi } from "@/features/map/mapApi";
 import { announce, Icon } from "@/ui";
 import { operatorHue } from "@/viz/viz";
 
@@ -25,7 +24,6 @@ const SLASH: SlashCommand[] = [
   { cmd: "/tag", args: "<label> <tag>", desc: "Tag a node (e.g. /tag DC01 crown-jewel)" },
   { cmd: "/find", args: "<query>", desc: "Filter the map. kind: compromise:>=admin tag: has:finding" },
   { cmd: "/clear", args: "", desc: "Clear the map filter" },
-  { cmd: "/connect", args: "", desc: "Draw a relation between two nodes on the map" },
 ];
 
 export function ActivityStream({ open, onToggle }: { open: boolean; onToggle: () => void }) {
@@ -112,9 +110,6 @@ export function ActivityStream({ open, onToggle }: { open: boolean; onToggle: ()
       case "/clear":
         setFilterQuery("");
         return "cleared filter";
-      case "/connect":
-        mapApi.toggleConnect?.();
-        return "connect mode. click a source then a target";
       default:
         return `unknown command ${cmd}. type / to see commands`;
     }

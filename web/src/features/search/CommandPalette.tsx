@@ -25,7 +25,6 @@ export function CommandPalette({ onReport, onClose }: { onReport: () => void; on
     () => [
       { id: "node", label: "Add node", hint: "n", run: () => setCreator("node") },
       { id: "edge", label: "Add edge", hint: "e", run: () => setCreator("edge") },
-      { id: "connect", label: "Connect two nodes", hint: "c", run: () => mapApi.toggleConnect?.() },
       { id: "fit", label: "Fit graph to view", hint: "f", run: () => mapApi.fit?.() },
       { id: "search", label: "Search assets", hint: "/", run: () => focusSel(".searchinput input") },
       { id: "nav", label: "Focus network navigator", hint: "g", run: () => focusSel('.ovlist[role="tree"]') },

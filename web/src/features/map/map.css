@@ -125,20 +125,6 @@
   background: var(--accent-weak);
 }
 
-.connecthint {
-  position: absolute;
-  top: 52px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  background: color-mix(in srgb, var(--surface-2) 96%, transparent);
-  border: 1px solid var(--accent);
-  color: var(--text);
-  font-size: var(--fs-base);
-  padding: var(--sp-3) var(--sp-5);
-  border-radius: var(--r-md);
-}
-
 /* Edge-kind filter popover (BloodHound-style declutter). */
 
 .edgefilter {

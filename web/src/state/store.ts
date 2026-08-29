@@ -150,7 +150,6 @@ interface State {
 
   filterQuery: string;
   viewAsOf: number | null;
-  mapArmed: boolean;
 
   creator: "node" | "edge" | null;
 
@@ -178,7 +177,6 @@ interface State {
   removeTemplate: (id: string) => void;
   createFromTemplate: (templateId: string, label: string) => string;
   setViewAsOf: (t: number | null) => void;
-  setMapArmed: (v: boolean) => void;
   setCreator: (c: "node" | "edge" | null) => void;
   setAppearanceOpen: (v: boolean) => void;
   setPendingOpen: (t: PendingOpenTarget | null) => void;
@@ -329,7 +327,6 @@ export const useStore = create<State>((set, get) => {
     lens: "all",
     filterQuery: "",
     viewAsOf: null,
-    mapArmed: false,
     appearanceOpen: false,
     pendingOpen: null,
     creator: null,
@@ -502,7 +499,6 @@ export const useStore = create<State>((set, get) => {
       return id;
     },
     setViewAsOf: (viewAsOf) => set({ viewAsOf }),
-    setMapArmed: (mapArmed) => set({ mapArmed }),
     setCreator: (creator) => set({ creator }),
     setAppearanceOpen: (appearanceOpen) => set({ appearanceOpen }),
     setPendingOpen: (pendingOpen) => set({ pendingOpen }),

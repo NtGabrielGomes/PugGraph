@@ -12,13 +12,14 @@
 
 .insptabs {
   display: flex;
+  flex-wrap: wrap;
   flex: 0 0 auto;
   border-bottom: 1px solid var(--border);
   background: var(--surface-1);
 }
 
 .insptab {
-  flex: 1;
+  flex: 1 1 33%;
   display: inline-flex;
   align-items: center;
   justify-content: center;

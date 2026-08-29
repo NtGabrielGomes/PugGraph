@@ -102,7 +102,7 @@ export const compromiseColor = (l: CompromiseLevel): string => COMPROMISE_COLOR[
 
 /** Ring thickness grows with compromise severity, so an owned node reads as a
  * heavy ring even at the map node size; apex (domain_admin) is the loudest. */
-export const compromiseBorder = (l: CompromiseLevel): number => 2 + COMPROMISE_RANK[l] * 0.85;
+export const compromiseBorder = (l: CompromiseLevel): number => 2 + COMPROMISE_RANK[l] * 1.25;
 
 // ---- Edge semantic styling -------------------------------------------------
 export type EdgeGroup =

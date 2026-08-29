@@ -15,6 +15,8 @@ const ASSIGNABLE_LEVELS: CompromiseLevel[] = ["user", "admin", "system", "domain
 
 export function buildNodeActions(id: string): MenuAction[] {
   const store = useStore.getState();
+  const node = store.nodes.find((n) => n.id === id);
+  const owned = !!node && node.compromise_level !== "unknown" && node.compromise_level !== "none";
   const setLevel = (level: CompromiseLevel): MenuAction => ({
     label: `Set ${level}`,
     dot: compromiseColor(level),
@@ -24,7 +26,6 @@ export function buildNodeActions(id: string): MenuAction[] {
   return [
     { label: "Inspect", icon: "focus", run: () => store.select(id) },
     { label: "Center on map", icon: "fit", run: () => mapApi.centerOn?.(id) },
-    { label: "Connect from here", icon: "link", run: () => mapApi.connectFrom?.(id) },
     { label: "Clone", icon: "clone", run: () => store.cloneNode(id) },
     {
       label: "Add tag...",
@@ -35,6 +36,9 @@ export function buildNodeActions(id: string): MenuAction[] {
       },
     },
     { separator: true },
+    owned
+      ? { label: "Mark as clean", dot: compromiseColor("none"), run: () => store.setCompromise(id, "none") }
+      : { label: "\u2620 Mark as compromised", run: () => store.setCompromise(id, "user") },
     ...ASSIGNABLE_LEVELS.map(setLevel),
     { separator: true },
     { label: "Delete", icon: "trash", danger: true, run: () => store.removeNode(id) },

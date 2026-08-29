@@ -12,7 +12,7 @@
     "test:watch": "vitest",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:build": "NO_STRIP=1 CI=true tauri build"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.0",

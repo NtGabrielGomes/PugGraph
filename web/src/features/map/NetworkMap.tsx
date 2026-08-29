@@ -17,7 +17,6 @@ import {
   edgeGroup,
 } from "@/viz/viz";
 import { iconDataUri } from "@/viz/icons";
-import { EdgeKindMenu, type EdgeMenuTarget } from "@/features/map/EdgeKindMenu";
 import { buildNodeActions } from "@/features/map/nodeActions";
 import { Icon, Menu } from "@/ui";
 
@@ -47,12 +46,12 @@ const STYLE: StylesheetStyle[] = [
       shape: "ellipse",
       label: "data(label)",
       color: "#ededed",
-      "font-size": 12,
+      "font-size": 11,
       "font-weight": 600,
       "text-valign": "bottom",
       "text-margin-y": 7,
-      "text-wrap": "ellipsis",
-      "text-max-width": "120px",
+      "text-wrap": "wrap",
+      "text-max-width": "140px",
       "text-background-color": "#070707",
       "text-background-opacity": 0.85,
       "text-background-padding": "3px",
@@ -89,10 +88,8 @@ const STYLE: StylesheetStyle[] = [
   },
 
   { selector: "node.onpath", style: { "overlay-color": "#db8038", "overlay-opacity": 0.22, "overlay-padding": 8, "min-zoomed-font-size": 0, "z-index": 50 } },
-  { selector: "node.connectsrc", style: { "overlay-color": SEL, "overlay-opacity": 0.2, "overlay-padding": 9 } },
   { selector: "node.selected", style: { "overlay-color": SEL, "overlay-opacity": 0.16, "overlay-padding": 7, "border-color": SEL, "border-width": 2.5, "min-zoomed-font-size": 0, "z-index": 99 } },
   { selector: "node:selected", style: { "overlay-color": SEL, "overlay-opacity": 0.14, "overlay-padding": 6 } },
-  { selector: "node.ghostnode", style: { width: 1, height: 1, "background-opacity": 0, "border-width": 0, label: "", events: "no" } },
 
   {
     selector: "edge",
@@ -101,31 +98,27 @@ const STYLE: StylesheetStyle[] = [
       "line-color": "#8a8a8a",
       "target-arrow-color": "#8a8a8a",
       "target-arrow-shape": "triangle",
-      "arrow-scale": 1,
+      "arrow-scale": 1.2,
       "curve-style": "bezier",
       label: "data(elabel)",
-      "font-size": 12,
+      "font-size": 10,
       color: "#b3b3b3",
       "text-background-color": "#070707",
       "text-background-opacity": 0.85,
       "text-background-padding": "3px",
       "text-background-shape": "roundrectangle",
-      "min-zoomed-font-size": 7,
+      "min-zoomed-font-size": 9,
       "text-rotation": "none",
     },
   },
   ...EDGE_GROUP_SELECTORS,
   { selector: "edge.noncanonical", style: { "line-color": "#d4b257", "target-arrow-color": "#d4b257", "line-style": "dashed", color: "#d4b257" } },
   { selector: "edge.suspected", style: { "line-style": "dashed", opacity: 0.85 } },
-  { selector: "edge.ghostedge", style: { "line-color": SEL, "line-style": "dashed", "target-arrow-shape": "none", "curve-style": "straight", events: "no", opacity: 0.7 } },
   { selector: "edge.onpath", style: { "line-color": "#db8038", "target-arrow-color": "#db8038", width: 3, "min-zoomed-font-size": 0, "z-index": 50 } },
   { selector: "edge.selected", style: { "line-color": SEL, "target-arrow-color": SEL, width: 3, "min-zoomed-font-size": 0, "z-index": 60 } },
   { selector: "node.hipath", style: { "overlay-color": "#ffffff", "overlay-opacity": 0.26, "overlay-padding": 11, "min-zoomed-font-size": 0, "z-index": 80 } },
   { selector: "edge.hipath", style: { "line-color": "#ffffff", "target-arrow-color": "#ffffff", width: 4, "min-zoomed-font-size": 0, "z-index": 80 } },
 ];
-
-const GHOST_NODE = "__cursor__";
-const GHOST_EDGE = "__draft__";
 
 interface Emphasis {
   selectedId: string | null;
@@ -165,11 +158,7 @@ export function NetworkMap() {
   const prevParentsRef = useRef<Record<string, string>>({});
   const firstRef = useRef<boolean>(true);
   const layoutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const connectRef = useRef<string | null>(null);
-  const armRef = useRef<boolean>(false);
 
-  const [arming, setArming] = useState(false);
-  const [menu, setMenu] = useState<EdgeMenuTarget | null>(null);
   const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
 
   const nodes = useStore((s) => s.nodes);
@@ -184,7 +173,6 @@ export function NetworkMap() {
   const queryScope = useStore((s) => s.queryScope);
   const hideAll = useStore((s) => s.hideAll);
   const hiddenEdgeKinds = useStore((s) => s.hiddenEdgeKinds);
-  const setMapArmed = useStore((s) => s.setMapArmed);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -192,12 +180,9 @@ export function NetworkMap() {
     const cy = cytoscape({
       container,
       style: STYLE,
-      wheelSensitivity: 0.2,
+      wheelSensitivity: 1,
       minZoom: 0.04,
       maxZoom: 4,
-      textureOnViewport: true,
-      hideEdgesOnViewport: true,
-      motionBlur: true,
       pixelRatio: 1,
     });
     cyRef.current = cy;
@@ -211,98 +196,16 @@ export function NetworkMap() {
     ro.observe(container);
     requestAnimationFrame(() => cy.resize());
 
-    const removeGhost = () => {
-      cy.getElementById(GHOST_EDGE).remove();
-      cy.getElementById(GHOST_NODE).remove();
-    };
-
-    const cancelConnect = () => {
-      const prev = connectRef.current;
-      connectRef.current = null;
-      armRef.current = false;
-      setArming(false);
-      cy.autoungrabify(false);
-      removeGhost();
-      if (prev)
-          cy.getElementById(prev).removeClass("connectsrc");
-      setMenu(null);
-    };
-    const startConnect = (id: string) => {
-      connectRef.current = id;
-      armRef.current = false;
-      setArming(false);
-      cy.autoungrabify(true);
-      const src = cy.getElementById(id);
-      src.addClass("connectsrc");
-      const pos = src.position();
-      cy.add([
-        { group: "nodes", data: { id: GHOST_NODE }, position: { x: pos.x, y: pos.y }, classes: "ghostnode", grabbable: false, selectable: false },
-        { group: "edges", data: { id: GHOST_EDGE, source: id, target: GHOST_NODE }, classes: "ghostedge", selectable: false },
-      ]);
-    };
-
-    const onMove = (ev: MouseEvent) => {
-      if (!connectRef.current)
-          return;
-      const cur = cy.getElementById(GHOST_NODE);
-      if (cur.empty())
-          return;
-      const pan = cy.pan();
-      const zoom = cy.zoom();
-      const rect = container.getBoundingClientRect();
-      cur.position({ x: (ev.clientX - rect.left - pan.x) / zoom, y: (ev.clientY - rect.top - pan.y) / zoom });
-    };
-    container.addEventListener("mousemove", onMove);
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && (connectRef.current || armRef.current)) {
-        e.stopPropagation();
-        cancelConnect();
-      }
-    };
-    container.addEventListener("keydown", onKey);
-
     cy.on("tap", "node", (e) => {
-      const id = e.target.id();
-      if (id === GHOST_NODE)
-          return;
-      const st = useStore.getState();
-
-      if (connectRef.current) {
-        if (id === connectRef.current) {
-          cancelConnect();
-          return;
-        }
-        const src = connectRef.current;
-        const sk = st.nodes.find((n) => n.id === src)?.kind;
-        const tk = st.nodes.find((n) => n.id === id)?.kind;
-        if (sk && tk) {
-          const oe = e.originalEvent as MouseEvent | undefined;
-          setMenu({ sourceId: src, targetId: id, sourceKind: sk, targetKind: tk, x: oe?.clientX ?? 0, y: oe?.clientY ?? 0 });
-        }
-        return;
-      }
-      if (armRef.current) {
-        startConnect(id);
-        return;
-      }
-      st.select(id);
+      useStore.getState().select(e.target.id());
     });
 
     cy.on("tap", "edge", (e) => {
-      if (e.target.id() === GHOST_EDGE)
-        return;
-      if (connectRef.current || armRef.current)
-        return;
       useStore.getState().select(e.target.id());
     });
 
     cy.on("cxttap", "node", (e) => {
-      if (e.target.id() === GHOST_NODE)
-        return;
       e.originalEvent?.preventDefault?.();
-      if (connectRef.current)
-          cancelConnect();
       const oe = e.originalEvent as MouseEvent | undefined;
       setCtx({ id: e.target.id(), x: oe?.clientX ?? 0, y: oe?.clientY ?? 0 });
     });
@@ -310,22 +213,19 @@ export function NetworkMap() {
     cy.on("tap", (e) => {
       if (e.target !== cy)
           return;
-      if (connectRef.current || armRef.current)
-          cancelConnect();
-      else
-          useStore.getState().select(null);
+      useStore.getState().select(null);
     });
 
     cy.on("select unselect", "node", () => {
       const ids: string[] = [];
-      cy.nodes(":selected").forEach((n) => { if (n.id() !== GHOST_NODE) ids.push(n.id()); });
+      cy.nodes(":selected").forEach((n) => { ids.push(n.id()); });
       useStore.getState().setBulkIds(ids);
     });
 
     cy.on("dragfree", "node", (e) => {
       const moved = new Set<string>();
-      if (e.target.id() !== GHOST_NODE) moved.add(e.target.id());
-      cy.nodes(":selected").forEach((n) => { if (n.id() !== GHOST_NODE) moved.add(n.id()); });
+      moved.add(e.target.id());
+      cy.nodes(":selected").forEach((n) => { moved.add(n.id()); });
       const entries = [...moved]
         .map((id) => cy.getElementById(id))
         .filter((el) => el.nonempty() && !el.isParent())
@@ -334,20 +234,9 @@ export function NetworkMap() {
           useStore.getState().saveNodePositions(entries);
     });
 
-    (cy as unknown as { _cancelConnect?: () => void; _arm?: () => void })._cancelConnect = cancelConnect;
-    (cy as unknown as { _arm?: () => void })._arm = () => {
-      if (connectRef.current)
-          cancelConnect();
-      armRef.current = true;
-      setArming(true);
-    };
-    mapApi.cancelConnect = cancelConnect;
     mapApi.clearSelection = () => { cy.elements().unselect(); useStore.getState().setBulkIds([]); };
-    mapApi.connectFrom = (id: string) => { if (connectRef.current) cancelConnect(); startConnect(id); };
 
     return () => {
-      container.removeEventListener("mousemove", onMove);
-      container.removeEventListener("keydown", onKey);
       ro.disconnect();
       if (layoutTimerRef.current)
           clearTimeout(layoutTimerRef.current);
@@ -400,11 +289,18 @@ export function NetworkMap() {
       e.id === em.selectedId ? "selected" : "",
     ].filter(Boolean).join(" ").trim();
 
+  // The map label adds a ☠ marker to owned nodes; parents (group boxes) keep
+  // their uppercase group name unmarked.
+  const nodeLabel = (n: GraphNode, model: GraphModel): string => {
+    if (model.parentIds.has(n.id)) return (n.label || n.id).toUpperCase();
+    const owned = n.compromise_level !== "unknown" && n.compromise_level !== "none";
+    return owned ? `\u2620 ${n.label}` : n.label;
+  };
+
   const elementsFor = (model: GraphModel, em: Emphasis): ElementDefinition[] => {
     const els: ElementDefinition[] = [];
     for (const n of model.visibleNodes) {
-      const label = model.parentIds.has(n.id) ? (n.label || n.id).toUpperCase() : n.label;
-      els.push({ data: { id: n.id, label, kind: n.kind, parent: model.parents[n.id] }, classes: nodeClasses(n, em), style: nodeStyle(n, model) });
+      els.push({ data: { id: n.id, label: nodeLabel(n, model), kind: n.kind, parent: model.parents[n.id] }, classes: nodeClasses(n, em), style: nodeStyle(n, model) });
     }
     for (const e of model.visibleEdges) {
       els.push({ data: { id: e.id, source: e.source, target: e.target, kind: e.kind, elabel: edgeLabel(model, e) }, classes: edgeClasses(model, e, em) });
@@ -419,6 +315,7 @@ export function NetworkMap() {
         if (el.nonempty()) {
           el.classes(nodeClasses(n, em));
           el.style(nodeStyle(n, model));
+          el.data("label", nodeLabel(n, model));
         }
       }
       for (const e of model.visibleEdges) {
@@ -476,12 +373,12 @@ export function NetworkMap() {
   const persistPositions = (cy: Core, ids: string[]) => {
     const entries = ids
       .map((id) => cy.getElementById(id))
-      .filter((el) => el.nonempty() && el.id() !== GHOST_NODE && !el.isParent())
+      .filter((el) => el.nonempty() && !el.isParent())
       .map((el) => ({ id: el.id(), x: el.position().x, y: el.position().y }));
     if (entries.length) useStore.getState().saveNodePositions(entries);
   };
 
-  const fitAll = (cy: Core) => cy.fit(cy.elements().not(".ghostnode,.ghostedge"), 40);
+  const fitAll = (cy: Core) => cy.fit(cy.elements(), 40);
 
   // BloodHound-style explore: an explicit scope (search hit, navigator focus,
   // pre-built query) IS the visible set; with "hide all" and no scope the map
@@ -559,7 +456,7 @@ export function NetworkMap() {
         if (newUnplaced.length) {
           const fixed: { nodeId: string; position: { x: number; y: number } }[] = [];
           cur.nodes().forEach((el) => {
-            if (el.id() !== GHOST_NODE && !el.isParent() && !newUnplaced.includes(el.id()))
+            if (!el.isParent() && !newUnplaced.includes(el.id()))
                 fixed.push({ nodeId: el.id(), position: { ...el.position() } });
           });
           runLayout(cur, { fit: false, randomize: false, fixed }).run();
@@ -598,7 +495,7 @@ export function NetworkMap() {
   const fit = () => {
     const cy = cyRef.current;
     if (cy)
-        cy.animate({ fit: { eles: cy.elements().not(".ghostnode,.ghostedge"), padding: 30 } }, { duration: reducedMotion() ? 0 : 250 });
+        cy.animate({ fit: { eles: cy.elements(), padding: 30 } }, { duration: reducedMotion() ? 0 : 250 });
   };
   const focus = () => {
     const cy = cyRef.current;
@@ -608,18 +505,8 @@ export function NetworkMap() {
     if (el.nonempty())
         cy.animate({ center: { eles: el }, zoom: 1.6 }, { duration: reducedMotion() ? 0 : 250 });
   };
-  const arm = () => {
-    const cy = cyRef.current as unknown as { _arm?: () => void; _cancelConnect?: () => void };
-    if (arming)
-        cy?._cancelConnect?.();
-    else
-        cy?._arm?.();
-  };
-
-  useEffect(() => { setMapArmed(arming); }, [arming, setMapArmed]);
   mapApi.fit = fit;
   mapApi.focus = focus;
-  mapApi.toggleConnect = arm;
   mapApi.centerOn = (id: string) => {
     const cy = cyRef.current;
     if (!cy)
@@ -644,7 +531,7 @@ export function NetworkMap() {
     const layout = runLayout(cy, { fit: true, randomize: true });
     void layout.promiseOn("layoutstop").then(() => {
       const ids: string[] = [];
-      cy.nodes().forEach((n) => { if (n.id() !== GHOST_NODE && !n.isParent()) ids.push(n.id()); });
+      cy.nodes().forEach((n) => { if (!n.isParent()) ids.push(n.id()); });
       persistPositions(cy, ids);
     });
     layout.run();
@@ -660,7 +547,6 @@ export function NetworkMap() {
         role="application"
         aria-label="Network topology map. Use the network navigator in the left panel to explore by keyboard."
       />
-      {arming && !menu && <div className="connecthint">Click a source node, then a target. Esc/background to cancel.</div>}
       {hideAll && !queryScope && (
         <div className="maphidden">
           <Icon name="eye-off" size={22} />
@@ -678,20 +564,6 @@ export function NetworkMap() {
           label="Node actions"
           actions={buildNodeActions(ctx.id)}
           onClose={() => setCtx(null)}
-        />
-      )}
-      {menu && (
-        <EdgeKindMenu
-          target={menu}
-          onPick={(kind) => {
-            useStore.getState().createEdge(menu.sourceId, menu.targetId, kind, "confirmed");
-            const cy = cyRef.current as unknown as { _cancelConnect?: () => void };
-            cy?._cancelConnect?.();
-          }}
-          onClose={() => {
-            const cy = cyRef.current as unknown as { _cancelConnect?: () => void };
-            cy?._cancelConnect?.();
-          }}
         />
       )}
     </div>

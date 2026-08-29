@@ -1,7 +1,6 @@
 // The workspace's global keyboard map. Mounted once in the live workspace, it
 // gives the whole tool keyboard parity with the mouse: jump to search, open the
-// add-node / add-edge dialogs, arm connect mode, fit the map, and cancel/clear
-// with Escape. Keystrokes are ignored while typing in a field so capture is
+// add-node / add-edge dialogs, fit the map, and cancel/clear with Escape. Keystrokes are ignored while typing in a field so capture is
 // never stolen from the quick-add bar, inspector, or any form.
 
 import { useEffect } from "react";
@@ -33,7 +32,6 @@ export function useGlobalKeys(tools: MapTools) {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (e.key === "Escape") {
-        mapApi.cancelConnect?.();
         useStore.getState().select(null);
         return;
       }
@@ -46,7 +44,6 @@ export function useGlobalKeys(tools: MapTools) {
           break;
         case "n": e.preventDefault(); tools.openAdd("node"); break;
         case "e": e.preventDefault(); tools.openAdd("edge"); break;
-        case "c": e.preventDefault(); mapApi.toggleConnect?.(); break;
         case "f": e.preventDefault(); mapApi.fit?.(); break;
         case "g":
           e.preventDefault();

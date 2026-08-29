@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ALL_EDGE_KINDS, IDENTITY_KINDS, NODE_GROUPS, edgeKindDesc, edgeKindLabel, edgeKindsFor, nodeKindDesc } from "@/domain/catalog";
 import { isHostKind, schemaFor, schemaForEdge, type FieldDef } from "@/domain/fieldSchema";
 import { useStore } from "@/state/store";
 import type { CompromiseLevel, Confidence, EdgeKind, NodeKind } from "@/domain/types";
 import { COMPROMISE_LEVELS, EDGE_GROUP_STYLE, compromiseColor, edgeGroup, kindColor } from "@/viz/viz";
 import { mapApi } from "@/features/map/mapApi";
-import { platform } from "@/io/platform";
 import { VizSettings } from "@/features/appearance/VizSettings";
 import { EdgeFilterButton } from "@/features/map/EdgeFilter";
 
@@ -64,9 +63,6 @@ export function Toolbar() {
   const mode = useStore((s) => s.creator);
   const settings = useStore((s) => s.appearanceOpen);
   const setSettings = useStore((s) => s.setAppearanceOpen);
-  const fileRef = useRef<HTMLInputElement | null>(null);
-  const importScans = useStore((s) => s.importScans);
-  const mapArmed = useStore((s) => s.mapArmed);
   const selectedId = useStore((s) => s.selectedId);
   return (
     <>
@@ -75,12 +71,6 @@ export function Toolbar() {
           <span className="tglabel">Create</span>
           <button onClick={() => setMode("node")} title="Add an asset / node (n)"><Icon name="node" size={14} /> Node</button>
           <button onClick={() => setMode("edge")} title="Add a relation / edge between two nodes (e)"><Icon name="edge" size={14} /> Edge</button>
-          <button
-            className={"icon" + (mapArmed ? " armed" : "")}
-            onClick={() => mapApi.toggleConnect?.()}
-            aria-pressed={mapArmed}
-            title="Connect two nodes. Click a source then a target (c)"
-          ><Icon name="link" size={16} /></button>
         </div>
         <div className="tgroup">
           <span className="tglabel">View</span>
@@ -92,31 +82,8 @@ export function Toolbar() {
           <CleanGraphButton />
         </div>
         <div className="tgroup">
-          <button
-            className="icon"
-            onClick={() => {
-              if (platform.isTauri())
-                  void platform.openScanFiles().then((f) => f.length && importScans(f));
-              else
-                  fileRef.current?.click();
-            }}
-            title="Import Nmap / BloodHound / Pughound / NetExec / Nessus output (SharpHound .zip accepted)"
-          ><Icon name="import" size={16} /></button>
           <button className="icon" onClick={() => setSettings(true)} title="Appearance / theme (shared across operators)"><Icon name="theme" size={16} /></button>
         </div>
-        <input
-          ref={fileRef}
-          type="file"
-          multiple
-          accept=".xml,.json,.nessus,.txt,.log,.zip"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            const files = e.target.files ? Array.from(e.target.files) : [];
-            if (files.length)
-                importScans(files);
-            e.target.value = "";
-          }}
-        />
       </div>
       {mode === "node" && <AddNodeDialog onClose={() => setMode(null)} />}
       {mode === "edge" && <AddEdgeDialog onClose={() => setMode(null)} />}

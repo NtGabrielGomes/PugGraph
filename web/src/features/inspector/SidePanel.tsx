@@ -23,7 +23,6 @@ import {
 import { credsForNode, useStore } from "@/state/store";
 import type { Confidence, CompromiseLevel } from "@/domain/types";
 import { COMPROMISE_LEVELS, EDGE_GROUP_STYLE, compromiseColor, edgeGroup, kindColor } from "@/viz/viz";
-import { mapApi } from "@/features/map/mapApi";
 import { TypedFields } from "@/features/inspector/TypedFields";
 import { Icon, Select } from "@/ui";
 
@@ -295,9 +294,6 @@ function NodeEditor({ id }: { id: string }) {
       </div>
 
       <div className="detailactions">
-        <button type="button" className="ghost" onClick={() => mapApi.connectFrom?.(id)} title="Draw a relation from this node, then click the target">
-          <Icon name="link" size={14} /> Connect
-        </button>
         <button type="button" className="ghost" onClick={() => cloneNode(id)} title="Duplicate this node's modelling (no identity keys)">
           <Icon name="clone" size={14} /> Clone
         </button>
