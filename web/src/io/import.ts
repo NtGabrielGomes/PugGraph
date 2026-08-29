@@ -849,6 +849,194 @@ const WELL_KNOWN_RID: Record<string, string> = {
   "521": "Read-only Domain Controllers",
 };
 
+/** Trustees that never become attack edges (SharpHound Helpers.PreProcessSID). */
+const FILTERED_ACE_SIDS = new Set(["S-1-5-18", "S-1-3-0", "S-1-5-10"]);
+
+/** ACE objectType GUIDs (SharpHoundCommon ACEGuids.cs), lowercase. */
+const PH_GUID = {
+  all: "00000000-0000-0000-0000-000000000000",
+  forceChangePassword: "00299570-246d-11d0-a768-00aa006e0529",
+  writeSpn: "f3a64788-5306-11d1-a9c5-0000f80367c1",
+  addKeyCredentialLink: "5b47d60f-6090-40b2-9f37-2a4de88f3063",
+  getChanges: "1131f6aa-9c07-11d1-f79f-00c04fc2dcd2",
+  getChangesAll: "1131f6ad-9c07-11d1-f79f-00c04fc2dcd2",
+  getChangesFiltered: "89e95b76-444d-4c62-991a-0facbeda640c",
+  member: "bf9679c0-0de6-11d0-a285-00aa003049e2",
+  membershipPropertySet: "bc0ac240-79a9-11d0-9020-00c04fc2d4cf",
+  writeAllowedToAct: "3f78c3e5-f79a-46bd-a0b8-9d18116ddc79",
+  userAccountRestrictions: "4c164200-20c0-11d0-a768-00aa006e0529",
+  writeGpLink: "f30e3bbe-9ff0-11d1-b603-0000f80367c1",
+  writeAltSecurityIdentities: "00fbf30c-91fe-11d1-aebc-0000f80367c1",
+  writePublicInformation: "e48d0154-bcf8-11d1-8702-00c04fb96050",
+  pkiNameFlag: "ea1dddc4-60ff-416e-8cc0-17cee534bce7",
+  pkiEnrollmentFlag: "d15ef7d8-f226-46db-ae79-b34e560bd12c",
+  enroll: "0e10c968-78fb-11d2-90d4-00c04f79dc55",
+  autoEnroll: "a05b8cc2-17bc-4802-a710-e7c15ab866a2",
+} as const;
+
+/** Schema class GUIDs (SharpHound ACLProcessor.BaseGuids) per class key. */
+const CLASS_SCHEMA_GUID: Record<string, string> = {
+  user: "bf967aba-0de6-11d0-a285-00aa003049e2",
+  computer: "bf967a86-0de6-11d0-a285-00aa003049e2",
+  group: "bf967a9c-0de6-11d0-a285-00aa003049e2",
+  domain: "19195a5a-6da0-11d0-afd3-00c04fd930c9",
+  gpo: "f30e3bc2-9ff0-11d1-b603-0000f80367c1",
+  ou: "bf967aa5-0de6-11d0-a285-00aa003049e2",
+  container: "bf967a8b-0de6-11d0-a285-00aa003049e2",
+  certtemplate: "e5209ca2-3bba-11d2-90cc-00c04fd91ab1",
+  ca: "ee4aa692-3bba-11d2-90cc-00c04fd91ab1",
+};
+
+/** LDAP structural objectClass (last of chain) → class key used for gating. */
+const OBJECT_CLASS: Record<string, string> = {
+  user: "user",
+  computer: "computer",
+  group: "group",
+  organizationalunit: "ou",
+  grouppolicycontainer: "gpo",
+  domaindns: "domain",
+  container: "container",
+  pkicertificatetemplate: "certtemplate",
+  certificationauthority: "ca",
+};
+
+/** Node kind for stubs created from ACL rows, by structural objectClass. */
+const phNodeKind = (objClass: string): NodeKind => {
+  switch (objClass) {
+    case "user": return "user_account";
+    case "computer": return "host_windows";
+    case "group": return "group";
+    case "organizationalunit": return "organizational_unit";
+    case "grouppolicycontainer": return "gpo";
+    case "domaindns": return "domain";
+    case "pkicertificatetemplate": return "cert_template";
+    case "certificationauthority": return "certificate_authority";
+    default: return "custom";
+  }
+};
+
+/** Only Allow ACEs become edges (collector spelling or legacy ACCESS_ALLOWED). */
+const isAllowAce = (aceType: string): boolean => {
+  const norm = aceType.replace(/[\s_]/g, "");
+  return norm === "" || norm === "accessallowed" || norm === "accessallowedobject";
+};
+
+/**
+ * Port of SharpHound's IsAceInheritedFrom: an ACE applies to the object iff it
+ * is inherited AND its inheritedObjectType is All/empty or matches the target's
+ * schema class GUID, or it is NOT inherited and NOT inherit-only. flagsHex is
+ * the collector's Flags column (0x10=inherited, 0x08=inherit-only).
+ */
+const aceAppliesToTarget = (flagsHex: string | undefined, inheritedObjectType: string, targetClass: string | undefined): boolean => {
+  let flags = 0;
+  const f = (flagsHex ?? "").trim().toLowerCase();
+  if (f) {
+    const v = parseInt(f.replace(/^0x/, ""), 16);
+    if (!Number.isNaN(v)) flags = v;
+  }
+  const inherited = (flags & 0x10) !== 0;
+  const inheritOnly = (flags & 0x08) !== 0;
+  if (inherited) {
+    if (!inheritedObjectType || inheritedObjectType === PH_GUID.all) return true;
+    const classGuid = targetClass ? CLASS_SCHEMA_GUID[targetClass] : undefined;
+    return classGuid !== undefined && inheritedObjectType === classGuid;
+  }
+  return !inheritOnly;
+};
+
+/**
+ * Port of the SharpHound ACL edge mapping (rights × objectType GUID × target
+ * class) → BloodHound edge names, which aceEdgeKind then maps to our kinds.
+ * lapsGuids resolves schema-defined LAPS attribute GUIDs (SchemaAttrs table).
+ */
+const aclEdgeNames = (rights: string, objectType: string, targetClass: string | undefined, lapsGuids: Set<string>): string[] => {
+  const kinds: string[] = [];
+  const add = (k: string): void => { if (!kinds.includes(k)) kinds.push(k); };
+  const tokens = new Set(rights.split(/[|;,]/).map((t) => t.trim().toLowerCase()).filter(Boolean));
+  const guid = objectType === "{..}" ? "" : objectType;
+  const allOrEmpty = guid === "" || guid === PH_GUID.all;
+
+  // GenericAll/WriteDacl/WriteOwner apply to every type, only when unscoped.
+  if (allOrEmpty) {
+    if (tokens.has("genericall")) return ["GenericAll"]; // exclusive: subsumes all
+    if (tokens.has("writedacl")) add("WriteDacl");
+    if (tokens.has("writeowner")) add("WriteOwner");
+  }
+
+  if (tokens.has("self") && !tokens.has("writeproperty") && !tokens.has("genericwrite") &&
+      targetClass === "group" && (guid === PH_GUID.member || guid === PH_GUID.membershipPropertySet || allOrEmpty)) {
+    add("AddSelf");
+  }
+
+  if (tokens.has("extendedright") || tokens.has("genericall")) {
+    switch (targetClass) {
+      case "domain":
+        if (guid === PH_GUID.getChanges) add("GetChanges");
+        else if (guid === PH_GUID.getChangesAll) add("GetChangesAll");
+        else if (guid === PH_GUID.getChangesFiltered) add("GetChangesInFilteredSet");
+        else if (allOrEmpty) add("AllExtendedRights");
+        break;
+      case "user":
+        if (guid === PH_GUID.forceChangePassword) add("ForceChangePassword");
+        else if (allOrEmpty) add("AllExtendedRights");
+        break;
+      case "computer":
+        if (lapsGuids.has(guid)) add("ReadLAPSPassword");
+        else if (allOrEmpty) add("AllExtendedRights");
+        break;
+      case "certtemplate":
+        if (guid === PH_GUID.enroll) add("Enroll");
+        else if (allOrEmpty) add("AllExtendedRights");
+        break;
+      case "ca":
+        if (guid === PH_GUID.enroll) add("Enroll");
+        break;
+    }
+  }
+
+  if (tokens.has("genericwrite") || tokens.has("writeproperty") || tokens.has("genericall")) {
+    if (targetClass && ["user", "group", "computer", "gpo", "ou", "domain", "certtemplate", "ca"].includes(targetClass) && allOrEmpty) {
+      add("GenericWrite");
+    }
+    if (targetClass === "user" && guid === PH_GUID.writeSpn) add("WriteSPN");
+    else if (targetClass === "computer" && guid === PH_GUID.writeAllowedToAct) add("AddAllowedToAct");
+    else if (targetClass === "computer" && guid === PH_GUID.userAccountRestrictions) add("WriteAccountRestrictions");
+    else if ((targetClass === "ou" || targetClass === "domain") && guid === PH_GUID.writeGpLink) add("WriteGPLink");
+    else if (targetClass === "group" && (guid === PH_GUID.member || guid === PH_GUID.membershipPropertySet)) add("AddMember");
+    else if ((targetClass === "user" || targetClass === "computer") && guid === PH_GUID.addKeyCredentialLink) add("AddKeyCredentialLink");
+    else if ((targetClass === "user" || targetClass === "computer") && guid === PH_GUID.writeAltSecurityIdentities) add("WriteAltSecurityIdentities");
+    else if ((targetClass === "user" || targetClass === "computer") && guid === PH_GUID.writePublicInformation) add("WritePublicInformation");
+    else if (targetClass === "certtemplate" && guid === PH_GUID.pkiEnrollmentFlag) add("WritePKIEnrollmentFlag");
+    else if (targetClass === "certtemplate" && guid === PH_GUID.pkiNameFlag) add("WritePKINameFlag");
+  }
+
+  // CA DACLs use CertificationAuthorityRights (0x1=ManageCA, 0x2=ManageCertificates);
+  // the collector decodes masks generically, so reinterpret only on CA targets.
+  if (targetClass === "ca") {
+    if (tokens.has("createchild")) add("ManageCA");
+    if (tokens.has("deletechild")) add("ManageCertificates");
+  }
+
+  // Enrollment extended rights on templates (collector may also emit GUIDs raw).
+  if (guid === PH_GUID.autoEnroll) add("AutoEnroll");
+
+  return kinds;
+};
+
+/** BloodHound edge name → our EdgeKind, extending aceEdgeKind's coverage. */
+const phAceKind = (edgeName: string): GraphEdge["kind"] | undefined => {
+  const viaShared = aceEdgeKind(edgeName);
+  if (viaShared) return viaShared;
+  switch (edgeName) {
+    case "GetChangesInFilteredSet": return "dc_sync";
+    case "Enroll": case "AutoEnroll": return "enroll";
+    case "WriteAltSecurityIdentities": case "WritePublicInformation":
+    case "WritePKIEnrollmentFlag": case "WritePKINameFlag":
+      return "generic_write";
+    default: return undefined;
+  }
+};
+
 /** Offensive AdminSDHolder rights worth an edge; pure read noise is skipped. */
 const aceRightEdge = (right: string): GraphEdge["kind"] | undefined => {
   switch (right.toLowerCase()) {
@@ -935,6 +1123,10 @@ export function applyPughound(c: Campaign, tables: PughoundTable[], ctx: ImportC
     );
     const os = [str(r, "operatingSystem"), str(r, "operatingSystemVersion")].filter(Boolean).join(" ");
     if (os) c.setField(id, "os_version", os);
+    // LAPS presence (SharpHound hasLaps equivalent) for ReadLAPSPassword gating.
+    if (str(r, "ms-Mcs-AdmPwdExpirationTime") || str(r, "msLAPS-PasswordExpirationTime")) {
+      c.setField(id, "laps_installed", true);
+    }
     const dn = str(r, "distinguishedName");
     if (sid) bySid.set(sid, id);
     if (sam) bySam.set(sam.toLowerCase(), id);
@@ -1219,6 +1411,90 @@ export function applyPughound(c: Campaign, tables: PughoundTable[], ctx: ImportC
     s.nodes++;
   }
 
+  // ---- full DACL dump (ACLs table) ----------------------------------------------------------
+  // SharpHound-parity derivation (~/Pughound docs/store-contract.md): only
+  // Allow ACEs become edges; filtered trustees dropped; inherited ACEs must
+  // match the target's schema class (IsAceInheritedFrom port).
+  const aclLapsGuids = new Set<string>();
+  for (const r of rows("SchemaAttrs")) {
+    const name = (str(r, "Name") ?? "").toLowerCase();
+    const guid = (str(r, "SchemaIDGUID") ?? "").toLowerCase();
+    if (guid && (name === "ms-mcs-admpwd" || name === "ms-laps-password" || name === "ms-laps-encryptedpassword")) {
+      aclLapsGuids.add(guid);
+    }
+  }
+  for (const r of rows("ACLs")) {
+    const dn = str(r, "DN");
+    if (!dn) continue;
+    const objClass = (str(r, "ObjectClass") ?? "").toLowerCase();
+    const targetClass = OBJECT_CLASS[objClass];
+    const sid = str(r, "SID");
+    const aceType = (str(r, "ACE_Type") ?? "").toLowerCase();
+    // Target: reuse the indexed node when known, else a typed stub.
+    let target = byDn.get(dn.toLowerCase());
+    if (!target) {
+      const label = str(r, "Object") ?? dn;
+      const keys: IdentityKey[] = [{ kind: "ad_dn", value: dn.toLowerCase(), is_primary: true }];
+      if (objClass === "domaindns" && domainSid) keys.push({ kind: "ad_sid", value: domainSid, is_primary: false });
+      target = c.resolveOrCreate(keys, (nid) => node(nid, phNodeKind(objClass), label, keys, p));
+      byDn.set(dn.toLowerCase(), target);
+      s.nodes++;
+    }
+    if (aceType === "owner") {
+      if (sid && !FILTERED_ACE_SIDS.has(sid.toUpperCase())) addEdge("owns", resolvePrincipal(sid), target);
+      continue;
+    }
+    if (!sid || !isAllowAce(aceType) || FILTERED_ACE_SIDS.has(sid.toUpperCase())) continue;
+    if (!aceAppliesToTarget(str(r, "Flags"), (str(r, "InheritedObjectType") ?? "").toLowerCase(), targetClass)) continue;
+    const rights = str(r, "Rights") ?? "";
+    const objType = (str(r, "ObjectType") ?? "").toLowerCase();
+    for (const edgeName of aclEdgeNames(rights, objType, targetClass, aclLapsGuids)) {
+      const kind = phAceKind(edgeName);
+      if (!kind) continue;
+      addEdge(kind, resolvePrincipal(sid), target, { rights, object_type: objType || undefined, auto: edgeName === "AutoEnroll" ? true : undefined });
+    }
+  }
+
+  // ---- ForceChangePassword tables ------------------------------------------------------------
+  for (const r of rows("ForceChangePassword_ACL")) {
+    const attackerSid = str(r, "AttackerSID");
+    const dn = str(r, "TargetDN");
+    if (!attackerSid || !dn) continue;
+    const tgt = byDn.get(dn.toLowerCase());
+    if (tgt) addEdge("force_change_password", resolvePrincipal(attackerSid), tgt, { right: str(r, "Right") });
+  }
+  for (const r of rows("ForceChangePassword_Users")) {
+    const id = userByRow(r);
+    if (id) c.setField(id, "must_change_password", true);
+  }
+
+  // ---- gMSA / sMSA ----------------------------------------------------------------------------
+  for (const r of rows("GMSA")) {
+    const sam = str(r, "sAMAccountName");
+    const dn = str(r, "distinguishedName");
+    if (!sam && !dn) continue;
+    const ik: IdentityKey[] = dn ? [{ kind: "ad_dn", value: dn.toLowerCase(), is_primary: true }] : [{ kind: "account_sam", value: sam!.toLowerCase(), is_primary: true }];
+    const id = c.resolveOrCreate(ik, (nid) => node(nid, "service_account", sam ?? dn ?? "gmsa", ik, p));
+    if (sam) bySam.set(sam.toLowerCase(), id);
+    if (dn) byDn.set(dn.toLowerCase(), id);
+    c.setField(id, "gmsa", true);
+    s.nodes++;
+  }
+  for (const r of rows("GMSA_Readers")) {
+    const gmsaDn = str(r, "GMSA_DN");
+    const readerSid = str(r, "ReaderSID");
+    if (!gmsaDn || !readerSid) continue;
+    const tgt = byDn.get(gmsaDn.toLowerCase());
+    if (tgt) addEdge("read_gmsa_password", resolvePrincipal(readerSid), tgt);
+  }
+
+  // ---- PSOs → domain fields ---------------------------------------------------------------------
+  const psos = rows("PSO").map((r) => str(r, "cn")).filter((v): v is string => !!v);
+  if (psos.length && domainId) c.setField(domainId, "psos", psos);
+
+  // ---- Azure / Entra ID ----------------------------------------------------------------------------
+  applyPughoundAzure(c, { rows }, { domainName, p, s, addEdge });
+
   // ---- LAPS passwords (sealed into the vault when held) ------------------------------------------
   for (const r of rows("LAPS_Passwords")) {
     const passCol = Object.keys(r).find((k) => /pass/i.test(k));
@@ -1246,6 +1522,130 @@ export function applyPughound(c: Campaign, tables: PughoundTable[], ctx: ImportC
   }
 
   return s;
+}
+
+// ---- Pughound Azure / Entra ID tables -------------------------------------------
+//
+// AzureAD_* tables (~/Pughound docs/store-contract.md). Users/SPs become
+// cloud_identity, devices/apps/tenant become cloud_resource, groups and
+// directory roles become group nodes; membership/ownership/role edges ride
+// the same member_of/owns kinds the AD side uses, so path reasoning works
+// across the hybrid graph.
+function applyPughoundAzure(
+  c: Campaign,
+  tables: { rows: (name: string) => Record<string, unknown>[] },
+  ctx: { domainName: string; p: Provenance; s: ImportSummary; addEdge: (kind: GraphEdge["kind"], source: string, target: string, fields?: Record<string, unknown>) => void },
+): void {
+  const { rows } = tables;
+  const { p, s, addEdge } = ctx;
+  const byId = new Map<string, string>(); // azure object id (GUID) → node id
+
+  const azNode = (
+    objectId: string | undefined,
+    kind: NodeKind,
+    label: string,
+    extraKeys: IdentityKey[] = [],
+  ): string | undefined => {
+    if (!objectId) return undefined;
+    const hit = byId.get(objectId.toLowerCase());
+    if (hit) return hit;
+    const ikeys: IdentityKey[] = [{ kind: "azure_object_id", value: objectId.toLowerCase(), is_primary: true }, ...extraKeys];
+    const id = c.resolveOrCreate(ikeys, (nid) => node(nid, kind, label, ikeys, p));
+    byId.set(objectId.toLowerCase(), id);
+    s.nodes++;
+    return id;
+  };
+
+  // Tenant (organization).
+  const org = rows("AzureAD_Organization")[0];
+  let tenantId: string | null = null;
+  if (org) {
+    tenantId = azNode(str(org, "ID"), "cloud_resource", str(org, "DisplayName") ?? "tenant") ?? null;
+    if (tenantId && str(org, "VerifiedDomains")) c.setField(tenantId, "verified_domains", str(org, "VerifiedDomains"));
+    if (tenantId) c.setField(tenantId, "azure_tenant", true);
+  }
+
+  for (const r of rows("AzureAD_Users")) {
+    const upn = (str(r, "userPrincipalName") ?? "").toLowerCase();
+    const id = azNode(str(r, "id"), "cloud_identity", str(r, "displayName") ?? upn ?? "azure-user",
+      upn ? [{ kind: "account_upn", value: upn, is_primary: false }] : []);
+    if (id && upn) c.setField(id, "upn", upn);
+  }
+  for (const r of rows("AzureAD_Groups")) {
+    azNode(str(r, "id"), "group", str(r, "displayName") ?? "azure-group");
+  }
+  for (const r of rows("AzureAD_Devices")) {
+    azNode(str(r, "id"), "cloud_resource", str(r, "displayName") ?? "azure-device");
+  }
+  for (const r of rows("AzureAD_ServicePrincipals")) {
+    const appId = (str(r, "appId") ?? "").toLowerCase();
+    const id = azNode(str(r, "id"), "cloud_identity", str(r, "displayName") ?? "service-principal",
+      appId ? [{ kind: "azure_app_id", value: appId, is_primary: false }] : []);
+    if (id) c.setField(id, "service_principal", true);
+  }
+  for (const r of rows("AzureAD_DirectoryRoles")) {
+    const id = azNode(str(r, "id"), "group", str(r, "displayName") ?? "azure-role");
+    if (id) c.setField(id, "azure_role", true);
+  }
+  for (const r of rows("AzureAD_Applications")) {
+    const appId = (str(r, "AppID") ?? "").toLowerCase();
+    const id = azNode(str(r, "ObjectID"), "cloud_resource", str(r, "DisplayName") ?? "app-registration",
+      appId ? [{ kind: "azure_app_id", value: appId, is_primary: false }] : []);
+    if (id) c.setField(id, "app_registration", true);
+  }
+
+  // Role definitions: templateId is what roleAssignments reference as RoleID.
+  const roleNameByTemplate = new Map<string, string>();
+  for (const r of rows("AzureAD_RoleDefinitions")) {
+    const templateId = (str(r, "TemplateID") ?? "").toLowerCase();
+    const name = str(r, "DisplayName");
+    if (templateId && name) roleNameByTemplate.set(templateId, name);
+  }
+
+  // Membership / ownership / roles.
+  for (const r of rows("AzureAD_GroupMembers")) {
+    const g = azNode(str(r, "GroupID"), "group", str(r, "GroupName") ?? "azure-group");
+    const m = byId.get((str(r, "MemberID") ?? "").toLowerCase());
+    if (g && m) addEdge("member_of", m, g);
+  }
+  for (const [table, kind, label, nameCol, idCol] of [
+    ["AzureAD_GroupOwners", "group", "azure-group", "GroupName", "GroupID"],
+    ["AzureAD_ServicePrincipalOwners", "cloud_identity", "service-principal", "SPName", "SPObjectID"],
+    ["AzureAD_ApplicationOwners", "cloud_resource", "app-registration", "AppName", "AppObjectID"],
+    ["AzureAD_DeviceRegisteredOwners", "cloud_resource", "azure-device", "DeviceName", "DeviceID"],
+  ] as const) {
+    for (const r of rows(table)) {
+      const tgt = azNode(str(r, idCol), kind, str(r, nameCol) ?? label);
+      const owner = byId.get((str(r, "OwnerID") ?? "").toLowerCase());
+      if (tgt && owner) addEdge("owns", owner, tgt);
+    }
+  }
+  for (const r of rows("AzureAD_RoleAssignments")) {
+    const roleId = str(r, "RoleID") ?? "";
+    const principal = byId.get((str(r, "PrincipalID") ?? "").toLowerCase());
+    if (!principal) continue;
+    const roleName = str(r, "RoleName") || roleNameByTemplate.get(roleId.toLowerCase()) || roleId;
+    // Roles are groups the principal is a member of — path engine treats them
+    // like any other membership. Global Admin gets the high-value marker.
+    const role = azNode(roleId || roleName, "group", roleName);
+    if (!role) continue;
+    c.setField(role, "azure_role", true);
+    if (roleId.toLowerCase() === "62e90394-69f5-4237-9190-012177145e10") c.setField(role, "is_tier_zero", true);
+    addEdge("member_of", principal, role);
+  }
+
+  // Federated identity credentials: abuse-relevant (workload identity), kept
+  // as structured fields on the app node.
+  for (const r of rows("AzureAD_FederatedIdentityCredentials")) {
+    const appId = byId.get((str(r, "AppObjectID") ?? "").toLowerCase());
+    if (!appId) continue;
+    const fic = [str(r, "Issuer"), str(r, "Subject")].filter(Boolean).join(" | ");
+    if (!fic) continue;
+    const existing = c.nodes().find((n) => n.id === appId);
+    const list = Array.isArray(existing?.fields["fics"]) ? [...(existing!.fields["fics"] as string[])] : [];
+    if (!list.includes(fic)) list.push(fic);
+    c.setField(appId, "fics", list);
+  }
 }
 
 // ---------------------------------------------------------------------------
