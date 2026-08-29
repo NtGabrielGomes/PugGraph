@@ -58,14 +58,60 @@ only ciphertext.
 
 ## Build & test
 
+### Prerequisites
+
+- **Rust** (`cargo`, 1.82+) and **Node.js + npm** (20+).
+  No-sudo Node install on any distro:
+  ```bash
+  mkdir -p ~/.local/opt ~/.local/bin
+  curl -sLO https://nodejs.org/dist/v24.20.0/node-v24.20.0-linux-x64.tar.xz
+  tar -xJf node-v24.20.0-linux-x64.tar.xz -C ~/.local/opt
+  ln -sfn ~/.local/opt/node-v24.20.0-linux-x64 ~/.local/opt/node
+  ln -sf ~/.local/opt/node/bin/{node,npm,npx} ~/.local/bin/
+  # ensure ~/.local/bin is on PATH, e.g.: export PATH="$HOME/.local/bin:$PATH"
+  ```
+- **Desktop shell only** (skip for CLI/web-only work): WebKitGTK 4.1.
+  Arch: `sudo pacman -S webkit2gtk-4.1` · Debian/Ubuntu: `sudo apt install libwebkit2gtk-4.1-dev`
+
+### Core & web
+
 ```bash
 cargo test --workspace        # Rust core: domain, crypto, crdt, import
 bash scripts/interop.sh       # Rust <-> Node E2E crypto interop
 cd web && npm install
 npm test                      # frontend unit tests
 npm run typecheck             # tsc --noEmit
-npm run tauri:dev             # run the desktop app
+npm run dev                   # web UI on http://localhost:5173
 ```
+
+### Desktop app
+
+```bash
+cd web && npm run tauri:dev   # run the desktop app (dev mode)
+bash scripts/build-desktop.sh # release bundles: AppImage + .deb + .rpm
+```
+
+`build-desktop.sh` wraps `tauri build` with the fixes modern distros need
+(`CI=1` env clash, `NO_STRIP` for binutils RELR sections, FUSE-less AppImage
+packaging, and a guard for the linuxdeploy gtk plugin on gdk-pixbuf >= 2.44).
+Artifacts land in `web/src-tauri/target/release/bundle/`; the AppImage runs
+stand-alone — on machines without FUSE, launch it with
+`APPIMAGE_EXTRACT_AND_RUN=1 ./Campaign\ Knowledge_0.1.0_amd64.AppImage`.
+
+### Hostile graphics/CPU environments (VMs)
+
+The desktop binary self-configures WebKitGTK fallbacks at startup (Linux only,
+only when the variable is not already set, so you can override):
+
+| Variable | Why |
+|---|---|
+| `WEBKIT_DISABLE_DMABUF_RENDERER=1` | DMA-BUF renderer freezes without GPU accel |
+| `WEBKIT_DISABLE_COMPOSITING_MODE=1` | threaded compositing crawls on software GL |
+| `JSC_useJIT=0` | *(only when the CPU lacks AVX — checked via `/proc/cpuinfo`)* JavaScriptCore's `ctiMasmProbeTrampoline` executes AVX instructions whenever any JIT tier is active; on CPUs without AVX (old hardware, VMs masking AVX from the host, e.g. VMware on Zen 4) this is a SIGILL that kills the web process mid-operation (gray frozen window). Interpreted JS/WASM is the only config verified stable there. Machines with AVX keep the full JIT. |
+
+The MESA `DRI3/DRI2` warnings at launch are cosmetic (software rendering
+fallback). To silence: `LIBGL_ALWAYS_SOFTWARE=1`. The real fix for a VM is
+enabling 3D acceleration in the hypervisor display settings.
 
 ## Importers
 

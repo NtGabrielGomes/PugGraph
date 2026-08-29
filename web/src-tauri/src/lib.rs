@@ -379,6 +379,29 @@ fn extract_open_target(args: &[String]) -> Option<String> {
         .cloned()
 }
 
+/// If the window does not meaningfully overlap any connected monitor, center
+/// it. Guards against window-state restores from a different display setup.
+fn clamp_onscreen(w: &tauri::WebviewWindow) {
+    let (Ok(pos), Ok(size), Ok(monitors)) =
+        (w.outer_position(), w.outer_size(), w.available_monitors())
+    else {
+        return;
+    };
+    const MIN_OVERLAP: i32 = 100;
+    let (w_right, w_bottom) = (pos.x + size.width as i32, pos.y + size.height as i32);
+    let visible = monitors.iter().any(|m| {
+        let (mp, ms) = (m.position(), m.size());
+        let (m_right, m_bottom) = (mp.x + ms.width as i32, mp.y + ms.height as i32);
+        w_right > mp.x + MIN_OVERLAP
+            && pos.x < m_right - MIN_OVERLAP
+            && w_bottom > mp.y + MIN_OVERLAP
+            && pos.y < m_bottom - MIN_OVERLAP
+    });
+    if !visible {
+        let _ = w.center();
+    }
+}
+
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, _cwd| {
@@ -418,6 +441,14 @@ pub fn run() {
         ])
         .setup(|app| {
             build_native_menu(app)?;
+
+            // tauri-plugin-window-state can restore a position saved on a
+            // monitor that no longer exists (multi-monitor -> single, changed
+            // VM displays), leaving the window unreachable off-screen. Clamp
+            // the main window onto a visible monitor.
+            if let Some(w) = app.get_webview_window("main") {
+                clamp_onscreen(&w);
+            }
 
             if let Some(target) = extract_open_target(&std::env::args().collect::<Vec<_>>()) {
                 app.state::<OpenAllowlist>()

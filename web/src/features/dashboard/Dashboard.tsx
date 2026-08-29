@@ -265,7 +265,9 @@ function NewCampaignForm({
 }) {
   const [campaignId, setCampaignId] = useState("");
   const [recipientsText, setRecipientsText] = useState("");
-  const [seedDemo, setSeedDemo] = useState(true);
+  // Demo seed is opt-in: real campaigns must start empty so demo nodes
+  // (esx01, WS01->DC01 path...) never mix with actual engagement data.
+  const [seedDemo, setSeedDemo] = useState(false);
 
   const parseRecipients = (): RecipientSpec[] =>
     recipientsText
