@@ -193,6 +193,15 @@ export function NetworkMap() {
       maxZoom: 4,
       userZoomingEnabled: false,
       pixelRatio: 1,
+      // During wheel-zoom gestures, skip edges and labels (~80% of draw cost
+      // on dense graphs): nodes-only redraws keep every frame cheap and
+      // UNIFORM — no 200ms+ hitch. (textureOnViewport was tried first: its
+      // lazy cache build IS a full-quality render, which landed as a big
+      // freeze on the first frame of every gesture.) Edges/labels reappear
+      // crisp on settle. Gated on the wheelZooming flag our custom wheel
+      // handler mirrors (userZoomingEnabled is off).
+      hideEdgesOnViewport: true,
+      hideLabelsOnViewport: true,
     });
     cyRef.current = cy;
 
@@ -209,38 +218,64 @@ export function NetworkMap() {
     // per notch (sluggish and jerky). Here each wheel event scales a TARGET zoom
     // and a rAF loop eases the actual zoom toward it at the cursor — gentle
     // response (one notch ≈ ×0.87) with smooth exponential interpolation.
-    // Label declutter: fade node/edge labels smoothly with zoom (throttled to
-    // 0.05 zoom steps so style recalcs stay rare). Bound to cy's zoom event,
-    // so it tracks the wheel loop, cy.fit, and every cy.animate zoom path.
-    let lastFade = -1;
-    const applyLabelFade = () => {
-      const z = cy.zoom();
-      const q = Math.round(z * 20) / 20;
-      if (q === lastFade) return;
-      lastFade = q;
-      cy.style()
-        .selector("node").style({ "text-opacity": fadeAt(z, LABEL_FADE.node) })
-        .selector("edge").style({ "text-opacity": fadeAt(z, LABEL_FADE.edge) })
-        .update();
-    };
-    cy.on("zoom", applyLabelFade);
-
     let zoomTarget = cy.zoom();
     let zoomRaf = 0;
     let zoomPos = { x: container.clientWidth / 2, y: container.clientHeight / 2 };
+
+    // Label declutter: fade node/edge labels smoothly with zoom. Applied as a
+    // per-element bypass in one batch — cy.style().selector().update() would
+    // APPEND a stylesheet block per call and recalc everything against the
+    // growing sheet. Bypass dirties every element, so it is skipped mid
+    // wheel-gesture and only applied once zoom settles, and opacity is
+    // quantized to 1/20 levels to no-op outside the fade ranges.
+    let lastNodeOp = -1;
+    let lastEdgeOp = -1;
+    const applyLabelFade = () => {
+      if (zoomRaf) return; // mid wheel-gesture — the converged frame applies it
+      const z = cy.zoom();
+      const nodeOp = Math.round(fadeAt(z, LABEL_FADE.node) * 20) / 20;
+      const edgeOp = Math.round(fadeAt(z, LABEL_FADE.edge) * 20) / 20;
+      if (nodeOp === lastNodeOp && edgeOp === lastEdgeOp) return;
+      lastNodeOp = nodeOp;
+      lastEdgeOp = edgeOp;
+      cy.batch(() => {
+        cy.nodes().style("text-opacity", nodeOp);
+        cy.edges().style("text-opacity", edgeOp);
+      });
+    };
+    cy.on("zoom", applyLabelFade);
+
+    // Engage the renderer's cheap gesture path (hideEdges/hideLabelsOnViewport
+    // gate on it). It only activates on the renderer's OWN wheelZooming flag —
+    // never set here because userZooming is off and we drive cy.zoom()
+    // ourselves. cy.renderer() is untyped in @types/cytoscape; single named
+    // cast for the documented internals we mirror from its native handler.
+    // The flag is cleared in zoomStep's converged frame (NOT a 150ms timer):
+    // that keeps the whole ease tail cheap and collapses the fade bypass and
+    // the full-quality restore into ONE settle redraw per gesture.
+    interface CyRenderer {
+      data: { wheelZooming: boolean };
+      redrawHint: (hint: string, val: boolean) => void;
+      redraw: () => void;
+    }
+    const renderer = (cy as unknown as { renderer: () => unknown }).renderer() as CyRenderer;
+
     const zoomStep = () => {
       const cur = cy.zoom();
       const next = cur + (zoomTarget - cur) * 0.35;
       if (Math.abs(next - zoomTarget) < 0.002 * zoomTarget) {
         cy.zoom({ level: zoomTarget, renderedPosition: zoomPos });
         zoomRaf = 0;
+        renderer.data.wheelZooming = false;
         applyLabelFade();
+        renderer.redrawHint("eles", true);
+        renderer.redraw();
         return;
       }
       cy.zoom({ level: next, renderedPosition: zoomPos });
-      applyLabelFade();
       zoomRaf = requestAnimationFrame(zoomStep);
     };
+
     const onWheel = (ev: WheelEvent) => {
       ev.preventDefault();
       const rect = container.getBoundingClientRect();
@@ -248,6 +283,7 @@ export function NetworkMap() {
       if (!zoomRaf) zoomTarget = cy.zoom();
       const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaY;
       zoomTarget = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), zoomTarget * Math.exp(-d * 0.0014)));
+      renderer.data.wheelZooming = true;
       if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomStep);
     };
     container.addEventListener("wheel", onWheel, { passive: false });
