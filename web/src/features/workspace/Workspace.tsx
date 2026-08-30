@@ -7,7 +7,7 @@ import { PrebuiltQueries } from "@/features/search/PrebuiltQueries";
 import { InspectorTabs } from "@/features/inspector/InspectorTabs";
 import { NetworkMap } from "@/features/map/NetworkMap";
 import { ReportPanel } from "@/features/report/ReportPanel";
-import { Toolbar } from "@/features/map/Toolbar";
+import { VizSettings } from "@/features/appearance/VizSettings";
 import { WorkspaceHeader } from "@/features/workspace/WorkspaceHeader";
 import { mapApi } from "@/features/map/mapApi";
 import { ErrorBoundary, LiveRegion } from "@/ui";
@@ -22,8 +22,9 @@ export function Workspace() {
   const exportCampaignFile = useStore((s) => s.exportCampaignFile);
   
   const campaignId = useStore((s) => s.campaign?.campaignId ?? "");
-  const setCreator = useStore((s) => s.setCreator);
   const selectedId = useStore((s) => s.selectedId);
+  const settingsOpen = useStore((s) => s.appearanceOpen);
+  const setSettingsOpen = useStore((s) => s.setAppearanceOpen);
 
   const [report, setReport] = useState(false);
   const [palette, setPalette] = useState(false);
@@ -33,7 +34,7 @@ export function Workspace() {
   const tab = useStore((s) => s.inspectorTab);
   const setTab = useStore((s) => s.setInspectorTab);
 
-  useGlobalKeys({ openAdd: (m) => setCreator(m), openPalette: () => setPalette(true) });
+  useGlobalKeys({ openPalette: () => setPalette(true) });
 
   useEffect(() => {
     if (selectedId) { setTab("inspect"); setRightOpen(true); }
@@ -75,6 +76,7 @@ export function Workspace() {
         onReport={() => setReport(true)}
       />
       {report && <ReportPanel onClose={() => setReport(false)} />}
+      {settingsOpen && <VizSettings onClose={() => setSettingsOpen(false)} />}
       {palette && <CommandPalette onReport={() => setReport(true)} onClose={() => setPalette(false)} />}
 
       <div className="leftcol">
@@ -89,7 +91,6 @@ export function Workspace() {
         <ErrorBoundary label="Map">
           <NetworkMap />
         </ErrorBoundary>
-        <Toolbar />
       </div>
       <div className="rightcol">
         <ErrorBoundary label="Inspector">

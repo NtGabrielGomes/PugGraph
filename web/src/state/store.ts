@@ -151,8 +151,6 @@ interface State {
   filterQuery: string;
   viewAsOf: number | null;
 
-  creator: "node" | "edge" | null;
-
   appearanceOpen: boolean;
   pendingOpen: PendingOpenTarget | null;
 
@@ -177,7 +175,6 @@ interface State {
   removeTemplate: (id: string) => void;
   createFromTemplate: (templateId: string, label: string) => string;
   setViewAsOf: (t: number | null) => void;
-  setCreator: (c: "node" | "edge" | null) => void;
   setAppearanceOpen: (v: boolean) => void;
   setPendingOpen: (t: PendingOpenTarget | null) => void;
   setBulkIds: (ids: string[]) => void;
@@ -329,7 +326,6 @@ export const useStore = create<State>((set, get) => {
     viewAsOf: null,
     appearanceOpen: false,
     pendingOpen: null,
-    creator: null,
     bulkIds: [],
 
     createCampaign: async (p) => {
@@ -453,7 +449,6 @@ export const useStore = create<State>((set, get) => {
         notice: null,
         selectedId: null,
         bulkIds: [],
-        creator: null,
         appearanceOpen: false,
       });
     },
@@ -499,7 +494,6 @@ export const useStore = create<State>((set, get) => {
       return id;
     },
     setViewAsOf: (viewAsOf) => set({ viewAsOf }),
-    setCreator: (creator) => set({ creator }),
     setAppearanceOpen: (appearanceOpen) => set({ appearanceOpen }),
     setPendingOpen: (pendingOpen) => set({ pendingOpen }),
     setBulkIds: (bulkIds) => set({ bulkIds }),

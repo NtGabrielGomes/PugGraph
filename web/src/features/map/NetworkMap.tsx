@@ -180,9 +180,9 @@ export function NetworkMap() {
     const cy = cytoscape({
       container,
       style: STYLE,
-      wheelSensitivity: 1,
       minZoom: 0.04,
       maxZoom: 4,
+      userZoomingEnabled: false,
       pixelRatio: 1,
     });
     cyRef.current = cy;
@@ -195,6 +195,35 @@ export function NetworkMap() {
     const ro = new ResizeObserver(() => cy.resize());
     ro.observe(container);
     requestAnimationFrame(() => cy.resize());
+
+    // Custom wheel zoom: cytoscape's built-in wheel zoom jumps one discrete step
+    // per notch (sluggish and jerky). Here each wheel event scales a TARGET zoom
+    // and a rAF loop eases the actual zoom toward it at the cursor — strong
+    // response (one notch ≈ ×0.78) with smooth exponential interpolation.
+    let zoomTarget = cy.zoom();
+    let zoomRaf = 0;
+    let zoomPos = { x: container.clientWidth / 2, y: container.clientHeight / 2 };
+    const zoomStep = () => {
+      const cur = cy.zoom();
+      const next = cur + (zoomTarget - cur) * 0.35;
+      if (Math.abs(next - zoomTarget) < 0.002 * zoomTarget) {
+        cy.zoom({ level: zoomTarget, renderedPosition: zoomPos });
+        zoomRaf = 0;
+        return;
+      }
+      cy.zoom({ level: next, renderedPosition: zoomPos });
+      zoomRaf = requestAnimationFrame(zoomStep);
+    };
+    const onWheel = (ev: WheelEvent) => {
+      ev.preventDefault();
+      const rect = container.getBoundingClientRect();
+      zoomPos = { x: ev.clientX - rect.left, y: ev.clientY - rect.top };
+      if (!zoomRaf) zoomTarget = cy.zoom();
+      const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaY;
+      zoomTarget = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), zoomTarget * Math.exp(-d * 0.0025)));
+      if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomStep);
+    };
+    container.addEventListener("wheel", onWheel, { passive: false });
 
     cy.on("tap", "node", (e) => {
       useStore.getState().select(e.target.id());
@@ -237,6 +266,8 @@ export function NetworkMap() {
     mapApi.clearSelection = () => { cy.elements().unselect(); useStore.getState().setBulkIds([]); };
 
     return () => {
+      container.removeEventListener("wheel", onWheel);
+      if (zoomRaf) cancelAnimationFrame(zoomRaf);
       ro.disconnect();
       if (layoutTimerRef.current)
           clearTimeout(layoutTimerRef.current);

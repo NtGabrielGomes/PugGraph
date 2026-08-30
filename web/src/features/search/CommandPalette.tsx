@@ -12,7 +12,6 @@ interface Cmd {
 const focusSel = (sel: string) => document.querySelector<HTMLElement>(sel)?.focus();
 
 export function CommandPalette({ onReport, onClose }: { onReport: () => void; onClose: () => void }) {
-  const setCreator = useStore((s) => s.setCreator);
   const setLens = useStore((s) => s.setLens);
   const setFilterQuery = useStore((s) => s.setFilterQuery);
   const setHighlightPath = useStore((s) => s.setHighlightPath);
@@ -23,8 +22,6 @@ export function CommandPalette({ onReport, onClose }: { onReport: () => void; on
 
   const commands = useMemo<Cmd[]>(
     () => [
-      { id: "node", label: "Add node", hint: "n", run: () => setCreator("node") },
-      { id: "edge", label: "Add edge", hint: "e", run: () => setCreator("edge") },
       { id: "fit", label: "Fit graph to view", hint: "f", run: () => mapApi.fit?.() },
       { id: "search", label: "Search assets", hint: "/", run: () => focusSel(".searchinput input") },
       { id: "nav", label: "Focus network navigator", hint: "g", run: () => focusSel('.ovlist[role="tree"]') },
@@ -40,7 +37,7 @@ export function CommandPalette({ onReport, onClose }: { onReport: () => void; on
       ...savedFilters.map((f) => ({ id: `f-${f.id}`, label: `Filter: ${f.name}`, hint: "view", run: () => setFilterQuery(f.query) })),
       ...pathmarks.map((p) => ({ id: `p-${p.id}`, label: `Path: ${p.name}`, hint: "view", run: () => setHighlightPath(p.hops) })),
     ],
-    [setCreator, setLens, setFilterQuery, setHighlightPath, savedFilters, pathmarks, onReport],
+    [setLens, setFilterQuery, setHighlightPath, savedFilters, pathmarks, onReport],
   );
 
   const filtered = commands.filter((c) => c.label.toLowerCase().includes(q.toLowerCase()));
