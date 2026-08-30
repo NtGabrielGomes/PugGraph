@@ -23,6 +23,7 @@ export function CommandPalette({ onReport, onClose }: { onReport: () => void; on
   const commands = useMemo<Cmd[]>(
     () => [
       { id: "fit", label: "Fit graph to view", hint: "f", run: () => mapApi.fit?.() },
+      { id: "arrange", label: "Rearrange map layout (spread nodes)", run: () => mapApi.autoArrange?.() },
       { id: "search", label: "Search assets", hint: "/", run: () => focusSel(".searchinput input") },
       { id: "nav", label: "Focus network navigator", hint: "g", run: () => focusSel('.ovlist[role="tree"]') },
       { id: "report", label: "Generate report", run: onReport },

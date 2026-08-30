@@ -25,6 +25,15 @@ const reducedMotion = (): boolean =>
 
 const PERF_THRESHOLD = 800;
 
+// BloodHound-style label declutter: labels fade out as you zoom out instead of
+// popping at a hard threshold. full/gone are cy.zoom() levels.
+const LABEL_FADE = {
+  node: { full: 0.9, gone: 0.6 }, // node font 11px, min-zoomed 7 stays as backstop
+  edge: { full: 1.4, gone: 0.9 }, // edge font 10px, min-zoomed 9 stays as backstop
+};
+const fadeAt = (z: number, f: { full: number; gone: number }): number =>
+  Math.min(1, Math.max(0, (z - f.gone) / (f.full - f.gone)));
+
 const EDGE_GROUP_SELECTORS: StylesheetStyle[] = Object.entries(EDGE_GROUP_STYLE).map(([g, s]) => ({
   selector: `edge.eg-${g}`,
   style: {
@@ -194,12 +203,28 @@ export function NetworkMap() {
 
     const ro = new ResizeObserver(() => cy.resize());
     ro.observe(container);
-    requestAnimationFrame(() => cy.resize());
+    requestAnimationFrame(() => { cy.resize(); applyLabelFade(); });
 
     // Custom wheel zoom: cytoscape's built-in wheel zoom jumps one discrete step
     // per notch (sluggish and jerky). Here each wheel event scales a TARGET zoom
-    // and a rAF loop eases the actual zoom toward it at the cursor — strong
-    // response (one notch ≈ ×0.78) with smooth exponential interpolation.
+    // and a rAF loop eases the actual zoom toward it at the cursor — gentle
+    // response (one notch ≈ ×0.87) with smooth exponential interpolation.
+    // Label declutter: fade node/edge labels smoothly with zoom (throttled to
+    // 0.05 zoom steps so style recalcs stay rare). Bound to cy's zoom event,
+    // so it tracks the wheel loop, cy.fit, and every cy.animate zoom path.
+    let lastFade = -1;
+    const applyLabelFade = () => {
+      const z = cy.zoom();
+      const q = Math.round(z * 20) / 20;
+      if (q === lastFade) return;
+      lastFade = q;
+      cy.style()
+        .selector("node").style({ "text-opacity": fadeAt(z, LABEL_FADE.node) })
+        .selector("edge").style({ "text-opacity": fadeAt(z, LABEL_FADE.edge) })
+        .update();
+    };
+    cy.on("zoom", applyLabelFade);
+
     let zoomTarget = cy.zoom();
     let zoomRaf = 0;
     let zoomPos = { x: container.clientWidth / 2, y: container.clientHeight / 2 };
@@ -209,9 +234,11 @@ export function NetworkMap() {
       if (Math.abs(next - zoomTarget) < 0.002 * zoomTarget) {
         cy.zoom({ level: zoomTarget, renderedPosition: zoomPos });
         zoomRaf = 0;
+        applyLabelFade();
         return;
       }
       cy.zoom({ level: next, renderedPosition: zoomPos });
+      applyLabelFade();
       zoomRaf = requestAnimationFrame(zoomStep);
     };
     const onWheel = (ev: WheelEvent) => {
@@ -220,7 +247,7 @@ export function NetworkMap() {
       zoomPos = { x: ev.clientX - rect.left, y: ev.clientY - rect.top };
       if (!zoomRaf) zoomTarget = cy.zoom();
       const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaY;
-      zoomTarget = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), zoomTarget * Math.exp(-d * 0.0025)));
+      zoomTarget = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), zoomTarget * Math.exp(-d * 0.0014)));
       if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomStep);
     };
     container.addEventListener("wheel", onWheel, { passive: false });
@@ -377,9 +404,16 @@ export function NetworkMap() {
         randomize: opts.randomize ?? firstRef.current,
         fit: opts.fit,
         padding: 48,
-        nodeSeparation: 160,
-        idealEdgeLength: 150,
-        nodeRepulsion: 40000,
+        nodeSeparation: 340,
+        idealEdgeLength: 300,
+        nodeRepulsion: 400000,
+        // BloodHound-style aggressive spreading. nestingFactor 1.0 (default
+        // 0.1) gives compound children — every member_of_domain principal in
+        // the domain box, VMs in hosts — the full ideal edge length instead of
+        // cramming them at 10% spacing; weak gravity stops the ball collapse.
+        nestingFactor: 1.0,
+        gravity: 0.05,
+        gravityCompound: 0.3,
         nodeDimensionsIncludeLabels: true,
         packComponents: true,
         fixedNodeConstraint: opts.fixed && opts.fixed.length ? opts.fixed : undefined,
